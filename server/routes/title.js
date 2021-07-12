@@ -4,6 +4,7 @@ import express from 'express';
 const router = express.Router()
 
 router.get('/Trending', async (req, res) => {
+	//console.log(req.locals.uid)
 	let query = `https://api.themoviedb.org/3/trending/all/week?api_key=${process.env.TMDBApiKey}`
 	//res.send(query)
   axios.get(query)

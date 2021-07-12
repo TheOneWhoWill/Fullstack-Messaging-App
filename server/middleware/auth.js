@@ -6,11 +6,12 @@ function verifyIDToken(req, res, next) {
 	admin.auth().verifyIdToken(idToken)
 		.then((decodedToken) => {
 			const uid = decodedToken.uid;
+			req.locals.uid = uid
+			next()
 		})
 		.catch(error => {
-			console.log(error)
+			res.send(error)
 		})
-	next()
 }
 
 export { verifyIDToken }

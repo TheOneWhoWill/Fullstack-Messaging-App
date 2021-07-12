@@ -7,7 +7,7 @@ import ScrollContainer from 'react-indiana-drag-scroll'
 
 function Carusel(props) {
 	const caruselRef = useRef();
-	const [titles, setTitles] = useState(null);
+	const [titles, setTitles] = useState();
 	let baseURL = process.env.REACT_APP_BASE_URL;
 
 	useEffect(() => {
@@ -33,7 +33,7 @@ function Carusel(props) {
 
 	return (
 		<div className="CaruselContainer">
-			<h2 className="CaruselTitle">{titles && props.name}</h2>
+			<h2 className="CaruselTitle">{props.name}</h2>
 			<ScrollContainer hideScrollbars={false} className="Carusel" ref={caruselRef}>
 				{titles && titles.map(title => {
 					return (

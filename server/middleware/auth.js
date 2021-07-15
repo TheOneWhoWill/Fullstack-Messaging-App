@@ -6,7 +6,7 @@ function verifyIDToken(req, res, next) {
 	admin.auth().verifyIdToken(idToken)
 		.then((decodedToken) => {
 			const uid = decodedToken.uid;
-			req.locals.uid = uid
+			req.uid = uid
 			next()
 		})
 		.catch(error => {

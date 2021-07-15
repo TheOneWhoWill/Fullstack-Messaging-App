@@ -16,6 +16,21 @@ router.get('/Trending', async (req, res) => {
 		})
 })
 
+router.get('/Popular/TV', async (req, res) => {
+	// Query Params
+	let genre = 18;
+	let voteAvg = 10;
+	let query = `https://api.themoviedb.org/3/discover/tv?api_key=${process.env.TMDBApiKey}&vote_average=${voteAvg}&with_genres=${genre}`
+	// Query
+	axios.get(query)
+		.then(popular => {
+			res.json(popular.data.results)
+		})
+		.catch(error => {
+			console.log(error)
+		})
+})
+
 router.get('/Trending/TV', async (req, res) => {
 	let query = `https://api.themoviedb.org/3/trending/tv/week?api_key=${process.env.TMDBApiKey}`
 	//res.send(query)

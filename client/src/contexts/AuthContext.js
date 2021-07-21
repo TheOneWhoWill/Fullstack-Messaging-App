@@ -26,11 +26,6 @@ export function AuthProvider({ children }) {
 		return auth.signInWithPopup(provider)
 	}
 
-	function GithubSignIn() {
-		var provider = new firebase.auth.GithubAuthProvider();
-		return auth.signInWithPopup(provider)
-	}
-
 	function TwitterSignIn() {
 		var provider = new firebase.auth.TwitterAuthProvider();
 		return auth.signInWithPopup(provider)
@@ -64,7 +59,6 @@ export function AuthProvider({ children }) {
 	const value = {
 		resetPassword,
 		TwitterSignIn,
-		GithubSignIn,
 		GoogleSignIn,
 		currentUser,
 		updateEmail,

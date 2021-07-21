@@ -7,3 +7,28 @@
 		width: 100%;
 	}
 }
+
+.Home {
+	display: flex;
+	height: calc(100% - 60px);
+	.sideBar {
+		width: 5rem;
+		display: flex;
+		flex-direction: column;
+		background: $headerTheme;
+		border-right: 2px solid #fff;
+		.chatBtn {
+			width: 3rem;
+			height: 3rem;
+			display: grid;
+			margin: 0.5rem auto;
+			border-radius: 1rem;
+			align-items: center;
+			justify-content: center;
+			background: rgb(78, 78, 78);
+		}
+	}
+	.main {
+		//
+	}
+}

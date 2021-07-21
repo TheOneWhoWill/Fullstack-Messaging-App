@@ -38,7 +38,7 @@ function Header() {
 
 	return (
 		<header className="Header">
-			<h3 onClick={() => history.push('/')}>Main Page</h3>
+			<h3 onClick={() => history.push('/')}>Pixels</h3>
 			<div className="right">
 				{currentUser ? 
 					<SignedInBtn

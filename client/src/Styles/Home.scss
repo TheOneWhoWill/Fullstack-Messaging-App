@@ -10,13 +10,13 @@
 
 .Home {
 	display: flex;
-	height: calc(100% - 60px);
+	height: 94vh;
 	.sideBar {
 		width: 5rem;
 		display: flex;
 		flex-direction: column;
 		background: $headerTheme;
-		border-right: 2px solid #fff;
+		border-right: 2px solid $headerBorder;
 		.chatBtn {
 			width: 3rem;
 			height: 3rem;

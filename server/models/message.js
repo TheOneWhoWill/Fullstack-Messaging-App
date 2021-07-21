@@ -6,16 +6,8 @@ let messageSchema = mongoose.Schema({
 		type: String,
 		required: true
 	},
-	isGroup: {
-		type: Boolean,
-		required: true
-	},
-	group: {
-		type: String,
-		required: false
-	},
 	recipient: {
-		type: String,
+		type: Object,
 		required: false
 	},
 	body: {

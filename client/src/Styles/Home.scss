@@ -10,7 +10,7 @@
 
 .Home {
 	display: flex;
-	height: 94vh;
+	height: calc(100% - 4rem);
 	.sideBar {
 		width: 5rem;
 		display: flex;
@@ -21,11 +21,20 @@
 			width: 3rem;
 			height: 3rem;
 			display: grid;
+			overflow: hidden;
 			margin: 0.5rem auto;
 			border-radius: 1rem;
 			align-items: center;
+			transition: 0.3s ease;
 			justify-content: center;
 			background: rgb(78, 78, 78);
+			img {
+				width: 3rem;
+				height: 3rem
+			}
+		}
+		.chatBtn:hover {
+			border-radius: 3rem;
 		}
 	}
 	.main {

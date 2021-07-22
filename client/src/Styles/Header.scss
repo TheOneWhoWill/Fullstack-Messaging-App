@@ -1,15 +1,15 @@
 .Header {
 	display: flex;
-	height: 6vh;
+	height: 4rem;
 	padding: 0px 20px;
 	grid-area: header;
 	align-items: center;
 	background: $headerTheme;
 	justify-content: space-between;
-	border-bottom: 2px solid $headerBorder;
+	border-top: 2px solid $headerBorder;
 	.profileImage {
-		width: 2rem;
-		height: 2rem;
+		width: 2.5rem;
+		height: 2.5rem;
 		border-radius: 20%;
 	}
 	.right {
@@ -64,4 +64,18 @@
 }
 .btn-success {
 	display: none;
+}
+
+.userInfo {
+	display: flex;
+	height: 2.5rem;
+	text-align: left;
+	margin-left: 0.7rem;
+	flex-direction: column;
+	justify-content: center;
+	h5 {
+		font-size: 1.3rem;
+		line-height: 1.3rem;
+		margin-bottom: 0;
+	}
 }

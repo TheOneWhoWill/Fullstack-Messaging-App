@@ -13,6 +13,9 @@ function SignedInBtn(props) {
 						src={props.img}
 						alt="ProfilePic"
 					/>
+					<div className="userInfo">
+						<h5>{props.displayName}</h5>
+					</div>
 				</Dropdown.Toggle>
 				<Dropdown.Menu className="menu">
 					<div className="item" onClick={() => alert('s')}>
@@ -38,22 +41,24 @@ function Header() {
 
 	return (
 		<header className="Header">
-			<h3 onClick={() => history.push('/')}>Pixels</h3>
 			<div className="right">
 				{currentUser ? 
 					<SignedInBtn
 						img={currentUser.photoURL}
 						logout={logout}
+						uid={currentUser.uid}
+						displayName={currentUser.displayName}
 					/>
 					:
 					<button
-						className="signInBtn"
-						onClick={() => history.push('/Login')}
+					className="signInBtn"
+					onClick={() => history.push('/Login')}
 					>
 						Log In
 					</button>
 				}
 			</div>
+			<h3 onClick={() => history.push('/')}>Pixels</h3>
 		</header>
 	);
 }

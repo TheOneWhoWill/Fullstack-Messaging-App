@@ -14,7 +14,6 @@ function OAuthBtn(props) {
 
 function Login() {
 	const { GoogleSignIn, TwitterSignIn, currentUser } = useAuth();
-	//https://img.icons8.com/material-rounded/256/000000/github.png
 
 	return (
 		<div className="Login">

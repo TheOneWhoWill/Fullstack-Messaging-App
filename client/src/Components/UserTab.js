@@ -1,5 +1,4 @@
 import React from 'react';
-import { useHistory } from "react-router-dom";
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -13,9 +12,6 @@ function SignedInBtn(props) {
 						src={props.img}
 						alt="ProfilePic"
 					/>
-					<div className="userInfo">
-						<h5>{props.displayName}</h5>
-					</div>
 				</Dropdown.Toggle>
 				<Dropdown.Menu className="menu">
 					<div className="item" onClick={() => alert('s')}>
@@ -36,31 +32,16 @@ function SignedInBtn(props) {
 }
 
 function Header() {
-	const history = useHistory();
 	const { currentUser, logout } = useAuth();
 
 	return (
-		<header className="Header">
-			<div className="right">
-				{currentUser ? 
-					<SignedInBtn
-						img={currentUser.photoURL}
-						logout={logout}
-						uid={currentUser.uid}
-						displayName={currentUser.displayName}
-					/>
-					:
-					<button
-					className="signInBtn"
-					onClick={() => history.push('/Login')}
-					>
-						Log In
-					</button>
-				}
-			</div>
-			<h3 onClick={() => history.push('/')}>Pixels</h3>
-		</header>
-	);
+		<SignedInBtn
+			img={currentUser.photoURL}
+			logout={logout}
+			uid={currentUser.uid}
+			displayName={currentUser.displayName}
+		/>
+	)
 }
 
 export default Header;

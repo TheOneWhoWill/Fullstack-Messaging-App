@@ -1,0 +1,65 @@
+.profileImage {
+	width: 100%;
+	height: 100%;
+	border-radius: 20%;
+}
+
+#dropdown-basic {
+	margin: 0;
+	padding: 0;
+	border: none;
+	background: none;
+	height: 48px;
+}
+
+.dropdown {
+	height: 48px;
+	display: flex;
+	justify-content: center;
+}
+
+.UserTab {
+	position: absolute;
+	bottom: 0;
+}
+
+.menu {
+	margin: 4px;
+	width: 120px;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	border-radius: 0.5rem;
+	background-color: $headerTheme;
+	border: 0.13rem solid $headerBorder;
+}
+
+.item {
+	padding: 4px 12px;
+	border: none;
+	text-decoration: none;
+}
+
+.item:hover {
+	background: #ffffff1a;
+}
+
+.signInBtn {
+	border: none;
+	outline: none;
+	font-size: 15px;
+	padding: 5px 10px;
+	border-radius: 4px;
+	background: #00aeff;
+}
+
+.menu {
+	display: none;
+}
+
+.dropdown-toggle::after {
+	display: none;
+}
+
+.btn-success {
+	display: none;
+}

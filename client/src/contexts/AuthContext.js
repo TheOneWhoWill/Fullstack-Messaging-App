@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { useHistory } from "react-router-dom";
 import firebase from 'firebase/app'
 import { auth } from '../firebase'
 
@@ -9,8 +10,8 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }) {
+	const history = useHistory();
 	const [currentUser, setCurrentuser] = useState()
-	const [loading, setLoading] = useState(true)
 
 	function signup(email, password, displayName, profile) {
 		return auth.createUserWithEmailAndPassword(email, password).then(function(result) {
@@ -50,10 +51,15 @@ export function AuthProvider({ children }) {
 	useEffect(() => {
 		const unsubscribe = auth.onAuthStateChanged(user => {
 			setCurrentuser(user)
-			setLoading(false)
+			if(user) {
+				history.push('/Home')
+			} else {
+				history.push('/Login')
+			}
 		})
 
 		return unsubscribe
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	const value = {
@@ -69,7 +75,7 @@ export function AuthProvider({ children }) {
 
 	return (
 		<AuthContext.Provider value={value}>
-			{!loading && children}
+			{children}
 		</AuthContext.Provider>
 	)
 }

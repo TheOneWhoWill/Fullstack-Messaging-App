@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 // Message Schema
-let messageSchema = mongoose.Schema({
+const messageSchema = mongoose.Schema({
 	sender: {
 		type: String,
 		required: true

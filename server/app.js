@@ -4,7 +4,6 @@ import admin from 'firebase-admin';
 import compression from 'compression';
 import authRouter from './routes/auth.js';
 import serviceAccount from './private/key.js';
-import { verifyIDToken } from './middleware/auth.js';
 
 dotenv.config()
 

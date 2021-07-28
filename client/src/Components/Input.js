@@ -4,6 +4,7 @@ function Input(props) {
 	return (
 		<div className="input">
 			<input
+				autocomplete="off"
 				placeholder=" "
 				className="inputFeild"
 				ref={props.inputRef}

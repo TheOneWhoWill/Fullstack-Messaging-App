@@ -48,6 +48,12 @@
 .authSection {
 	display: flex;
 	flex-direction: column;
+	h6 {
+		span {
+			color: #1a0dab;
+			text-decoration: underline;
+		}
+	}
 	.bottomOptions {
 		display: flex;
 		align-items: center;
@@ -69,6 +75,7 @@
 		}
 	}
 }
+
 .submitBtn {
 	border: none;
 	outline: none;

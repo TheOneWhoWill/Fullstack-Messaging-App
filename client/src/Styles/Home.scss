@@ -18,32 +18,33 @@
 		background: $headerTheme;
 		grid-template-rows: auto calc(48px + 1rem);
 		border-right: 2px solid $headerBorder;
-		.chats {
-			height: 100%;
-			display: flex;
-			flex-direction: column;
-		}
-		.chatBtn {
-			width: 3rem;
-			height: 3rem;
-			display: grid;
-			overflow: hidden;
-			margin: 0.5rem 0;
-			border-radius: 1rem;
-			align-items: center;
-			transition: 0.3s ease;
-			justify-content: center;
-			background: rgb(78, 78, 78);
-			img {
-				width: 3rem;
-				height: 3rem
-			}
-		}
-		.chatBtn:hover {
-			border-radius: 3rem;
-		}
 	}
 	.main {
 		color: #fff;
 	}
+}
+
+.chats {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+.chatBtn {
+	width: 3rem;
+	height: 3rem;
+	display: grid;
+	overflow: hidden;
+	margin: 0.5rem 0;
+	border-radius: 1rem;
+	align-items: center;
+	transition: 0.3s ease;
+	justify-content: center;
+	background: rgb(78, 78, 78);
+	img {
+		width: 3rem;
+		height: 3rem
+	}
+}
+.chatBtn:hover {
+	border-radius: 3rem;
 }

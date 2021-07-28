@@ -34,7 +34,7 @@
 		letter-spacing: 1px;
 		background: $darkblue;
 	}
-	input:not(:placeholder-shown) input:not(:focus) + label {
+	.inputFeild:not(:placeholder-shown).inputFeild:not(:focus) ~ .formLabel {
 		z-index: 2;
 		top: -0.5rem;
 		left: 0.8rem;

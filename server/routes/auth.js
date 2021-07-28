@@ -47,4 +47,18 @@ router.post('/create/account', (req, res) => {
 	})
 })
 
+// Delete Account
+router.post('/delete/account', (req, res) => {
+	let uid = req.uid
+
+	auth.deleteUser(uid)
+		.then(() => {
+			res.send('Account ' + uid + ' deleted')
+		})
+		.catch((error) => {
+			res.send('Account ' + uid + ' couldn\'t be deleted: ' + error)
+		})
+})
+
+
 export default router

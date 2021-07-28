@@ -2,11 +2,10 @@ import express from 'express';
 import admin from 'firebase-admin';
 import { verifyIDToken } from '../middleware/auth.js'
 
-const auth = admin.auth();
 const router = express.Router()
 
 async function createToken(uid) {
-	return await auth.createCustomToken(uid)
+	return await admin.auth().createCustomToken(uid)
 }
 
 // Create Custom Token
@@ -24,7 +23,7 @@ router.get('/create/token', verifyIDToken, (req, res) => {
 
 // Create Account
 router.post('/create/account', (req, res) => {
-	auth.createUser({
+	admin.auth().createUser({
 		email: req.body.email,
 		emailVerified: false,
 		password: req.body.password,
@@ -51,7 +50,7 @@ router.post('/create/account', (req, res) => {
 router.post('/delete/account', (req, res) => {
 	let uid = req.uid
 
-	auth.deleteUser(uid)
+	admin.auth().deleteUser(uid)
 		.then(() => {
 			res.send('Account ' + uid + ' deleted')
 		})

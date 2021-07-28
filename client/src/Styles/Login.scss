@@ -26,6 +26,13 @@
   }
 }
 
+.loginBody {
+	display: flex;
+	.authSection {
+		margin-right: 1rem;
+	}
+}
+
 .oAuth {
   border: none;
   width: 17rem;

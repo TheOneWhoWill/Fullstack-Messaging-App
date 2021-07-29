@@ -11,6 +11,7 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
 	const history = useHistory();
+	const [loading, setLoading] = useState(true)
 	const [currentUser, setCurrentuser] = useState()
 
 	function signup(email, password, displayName, profile) {
@@ -44,6 +45,10 @@ export function AuthProvider({ children }) {
 		return auth.signInWithEmailAndPassword(email, password)
 	}
 
+	function loginWithToken(token) {
+		return auth.signInWithCustomToken(token)
+	}
+
 	function logout() {
 		return auth.signOut()
 	}
@@ -51,6 +56,7 @@ export function AuthProvider({ children }) {
 	useEffect(() => {
 		const unsubscribe = auth.onAuthStateChanged(user => {
 			setCurrentuser(user)
+			setLoading(false)
 			if(user) {
 				history.push('/Home')
 			} else {
@@ -63,6 +69,7 @@ export function AuthProvider({ children }) {
 	}, [])
 
 	const value = {
+		loginWithToken,
 		resetPassword,
 		TwitterSignIn,
 		GoogleSignIn,
@@ -75,7 +82,7 @@ export function AuthProvider({ children }) {
 
 	return (
 		<AuthContext.Provider value={value}>
-			{children}
+			{!loading && children}
 		</AuthContext.Provider>
 	)
 }

@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import AuthOptions from '../Components/AuthOptions';
+import { Register, Login } from '../Components/AuthOptions';
 //rfce
 
 function OAuthBtn(props) {
@@ -13,16 +13,22 @@ function OAuthBtn(props) {
 	)
 }
 
-function Login() {
+function AuthPage() {
+	let [newUser, setNew] = useState(false);
+	function change() {setNew(!newUser)}
 	const { GoogleSignIn, TwitterSignIn, currentUser } = useAuth();
 
 	return (
 		<div className="Login">
 			<div className="LoginModal">
-				<h2 className="loginHeader">Login</h2>
+				<h2 className="loginHeader">{newUser ? "Register" : "Login"}</h2>
 				<div className="loginBody">
 					<div className="left">
-						<AuthOptions />
+						{newUser ?
+							<Register change={change} />
+							:
+							<Login change={change}/>
+						}
 					</div>
 					<div className="OAuthSection">
 						<OAuthBtn
@@ -45,4 +51,4 @@ function Login() {
 	);
 }
 
-export default Login;
+export default AuthPage;

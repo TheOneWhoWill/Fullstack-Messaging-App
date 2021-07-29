@@ -27,7 +27,7 @@ router.post('/create/account', (req, res) => {
 		email: req.body.email,
 		emailVerified: false,
 		password: req.body.password,
-		photoURL: req.body.photoURL,
+		photoURL: "https://styles.redditmedia.com/t5_umidw/styles/profileIcon_snooedb95d3a-8922-40a2-b725-1a2ad7b47e1b-headshot.png?width=256&height=256&crop=256:256,smart&s=a570e2aac46bceab686caad5badca5115291e15a",
 		displayName: req.body.displayName
 	})
 	.then(userRecord => {

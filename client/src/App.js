@@ -2,7 +2,7 @@ import React from 'react';
 import './Styles/index.scss';
 import Home from './pages/Home';
 import Body from './pages/Body';
-import Login from './pages/Login';
+import Auth from './pages/Authenticate';
 import { useAuth } from './contexts/AuthContext';
 import { BrowserRouter, Route } from 'react-router-dom';
 
@@ -11,8 +11,8 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-				<Route exact path="/Home" component={currentUser ? Home : Login} />
-				<Route exact path="/Login" component={Login} />
+				<Route exact path="/Home" component={currentUser ? Home : Auth} />
+				<Route exact path="/Auth" component={Auth} />
 				<Route exact path="/" component={Body} />
       </BrowserRouter>
     </div>

@@ -59,5 +59,4 @@ router.post('/delete/account', (req, res) => {
 		})
 })
 
-
 export default router

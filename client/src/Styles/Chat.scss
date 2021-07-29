@@ -19,14 +19,6 @@
 	display: grid;
 	background: #61666e;
 	grid-template-rows: 4rem auto 6rem;
-	.chatHeader {
-		height: 4rem;
-		display: grid;
-		padding: 0rem 1rem;
-		align-items: center;
-		background: $headerTheme;
-		border-bottom: 2px solid $headerBorder;
-	}
 	.chatBottom {
 		height: 6rem;
 		display: grid;
@@ -38,6 +30,7 @@
 		width: 100%;
 		gap: 0.5rem;
 		display: grid;
+		align-items: center;
 		border-radius: 0.5rem;
 		background: $globalgrey;
 		grid-template-columns: auto 3rem 3rem;
@@ -53,15 +46,65 @@
 			height: 3rem;
 			border: none;
 			outline: none;
-			font-size: 1.5rem;
-			color: #cfcfcf;
+			color: #b1b1b1;
 			background: none;
+			font-size: 1.5rem;
+			text-align: center;
 			transition: 0.2s ease;
 			border-radius: 0.5rem;
 		}
 		button:hover {
 			color: #fff;
-			transform: scale(1.1);
+			transform: scale(1.05);
 		}
 	}
+}
+
+.chatHeader {
+	height: 4rem;
+	display: grid;
+	padding: 0rem 1rem;
+	align-items: center;
+	background: $headerTheme;
+	border-bottom: 2px solid $headerBorder;
+}
+
+.message {
+	gap: 1rem;
+	display: grid;
+	padding: 0.4rem 1rem;
+	grid-template-columns: 3rem auto;
+	img {
+		width: 3rem;
+		height: 3rem;
+		border-radius: 0.5rem;
+	}
+	.msgBody {
+		.top {
+			display: flex;
+			height: 1.2rem;
+			align-items: center;
+			.sender {
+				margin: 0;
+				font-size: 1rem;
+				font-weight: 500;
+				line-height: 1rem;
+				margin-right: 0.4rem;
+				align-self: flex-end;
+			}
+			.timestamp {
+				color: #c7c3c3;
+				font-size: 0.7rem;
+				align-self: flex-end;
+			}
+		}
+		.msgText {
+			font-size: 1rem;
+			line-height: 1.5rem;
+		}
+	}
+}
+
+.message:hover {
+	background-color: #54585f;
 }

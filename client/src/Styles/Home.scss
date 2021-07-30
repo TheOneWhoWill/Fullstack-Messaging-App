@@ -16,7 +16,7 @@
 		display: grid;
 		justify-content: center;
 		background: $headerTheme;
-		grid-template-rows: auto calc(48px + 1rem);
+		grid-template-rows: 6.5fr 1fr;
 		border-right: 2px solid $headerBorder;
 	}
 	.main {
@@ -25,16 +25,22 @@
 }
 
 .chats {
-	height: 100%;
 	display: flex;
+	overflow-y: scroll;
 	flex-direction: column;
 }
+.chats::-webkit-scrollbar {
+	width: 0px;
+}
+
 .chatBtn {
 	width: 3rem;
 	height: 3rem;
 	display: grid;
+	min-width: 3rem;
 	overflow: hidden;
 	margin: 0.5rem 0;
+	min-height: 3rem;
 	border-radius: 1rem;
 	align-items: center;
 	transition: 0.3s ease;

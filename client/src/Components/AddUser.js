@@ -5,7 +5,7 @@ import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 
 function AddUser() {
 	return (
-		<div className="addUserBtn chatBtn">
+		<div className="addUserBtn">
 			<Icon icon={faUserPlus}/>
 		</div>
 	)

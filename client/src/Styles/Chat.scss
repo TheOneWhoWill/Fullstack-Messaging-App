@@ -5,9 +5,10 @@
 	.sideBar {
 		width: 5rem;
 		display: grid;
+		max-height: auto;
 		justify-content: center;
 		background: $headerTheme;
-		grid-template-rows: auto calc(48px + 1rem);
+		grid-template-rows: auto 5rem;
 		border-right: 2px solid $headerBorder;
 	}
 	.main {

@@ -84,3 +84,11 @@
 	background: $globalblue;
 	transform: translateY(-0.4rem);
 }
+// Add user Button and Popup
+.addUserBtn {
+	font-size: 20px;
+	background: #1a0dab;
+	svg path {
+		fill: rgb(70, 235, 70);
+	}
+}

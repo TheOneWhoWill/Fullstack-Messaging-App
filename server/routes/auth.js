@@ -8,6 +8,21 @@ async function createToken(uid) {
 	return await admin.auth().createCustomToken(uid)
 }
 
+// Get Users
+router.get('/get/users', (req, res) => {
+	function pluck(array, key, key2, key3) {
+		return array.map(function(item) { return {uid: item[key], displayName: item[key2], photoURL: item[key3]}; });
+	}
+
+	admin.auth().listUsers(10)
+	.then(result => {
+		res.send(pluck(result.users, 'uid', 'displayName', 'photoURL'))
+	})
+	.catch((error) => {
+		res.send('Account Creation Failed: ' + error)
+	})
+})
+
 // Create Custom Token
 router.get('/create/token', verifyIDToken, (req, res) => {
 	let uid = req.uid

@@ -5,7 +5,7 @@ import { verifyIDToken } from '../middleware/auth.js';
 const router = express.Router()
 
 // Send Message
-router.post('/send/message', verifyIDToken, (req, res) => {
+router.post('/message', verifyIDToken, (req, res) => {
 	const message = {
     sender: req.body.sender,
 		recipient: {

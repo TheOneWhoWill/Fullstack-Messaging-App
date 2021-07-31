@@ -15,13 +15,34 @@ router.get('/get/users', (req, res) => {
 	}
 
 	admin.auth().listUsers(10)
-	.then(result => {
-		res.send(pluck(result.users, 'uid', 'displayName', 'photoURL'))
-	})
-	.catch((error) => {
-		res.send('Account Creation Failed: ' + error)
-	})
+		.then(result => {
+			res.send(pluck(result.users, 'uid', 'displayName', 'photoURL'))
+		})
+		.catch((error) => {
+			res.send('Unable to fetch users: ' + error)
+		})
 })
+
+// Get Users
+router.get('/get/user/:uid', (req, res) => {
+	let uid = req.params.uid;
+
+	admin.auth().getUser(uid)
+		.then(userRecord => {
+			let user = userRecord.toJSON()
+			let response = {
+				uid: user.uid,
+				displayName: user.displayName,
+				photoURL: user.photoURL,
+				emailVerified: user.emailVerified,	
+			}
+			res.send(response)
+		})
+		.catch((error) => {
+			res.send('Unable to fetch users: ' + error)
+		})
+})
+
 
 // Create Custom Token
 router.get('/create/token', verifyIDToken, (req, res) => {

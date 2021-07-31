@@ -1,7 +1,7 @@
 import admin from 'firebase-admin';
 
 function verifyIDToken(req, res, next) {
-	let idToken = req.query.token
+	let idToken = req.body.token
 	
 	admin.auth().verifyIdToken(idToken)
 		.then((decodedToken) => {

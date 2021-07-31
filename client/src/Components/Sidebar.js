@@ -25,7 +25,6 @@ function Sidebar() {
 						<ChatBtn channelName={user.displayName} channelID={user.uid} image={user.photoURL}/>
 					)
 				})}
-				<ChatBtn channelName="t" channelID='2331232864' image="https://lh3.googleusercontent.com/a-/AOh14Gh4AMmiTs7xghlj45muuEGWp7GQYQ3D6yhC7xwCww=s96-c" />
 			</div>
 			<div className="sidebarBottom">
 				<AddUser />

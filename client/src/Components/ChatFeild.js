@@ -1,12 +1,16 @@
-import Message from './Message'
-import axios from 'axios'
+import axios from 'axios';
+import Message from './Message';
+import firebase from 'firebase'
 import { useParams } from "react-router-dom";
-import React, { useState, useEffect } from 'react'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome'
+import { useAuth } from '../contexts/AuthContext';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import React, { useState, useEffect, useRef } from 'react';
+import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 
 function ChatFeild() {
 	const { id } = useParams();
+	const inputRef = useRef(null);
+	const { currentUser } = useAuth();
 	let [userData, setUserData] = useState();
 	
 	useEffect(() => {
@@ -18,6 +22,30 @@ function ChatFeild() {
 				}
 			})
 	})
+
+	function sendMessage() {
+		firebase.auth().currentUser.getIdToken(true)
+			.then(idToken => {
+				let query = `${process.env.REACT_APP_BASE_URL}/send/message`;
+				let request = {
+					token: idToken,
+					msg: inputRef.current.value,
+					sender: currentUser.uid,
+					recipient: id
+				}
+				axios.post(query, request)
+					.then(response => {
+						// Idk do something
+					})
+			})
+			.catch(err => {console.log(err)})
+	}
+
+	function keyDownHandler(e) {
+		if(e.key === 'Enter') {
+			sendMessage()
+		}
+	}
 
 	return (
 		<div className="chat">
@@ -33,7 +61,7 @@ function ChatFeild() {
 			</div>
 			<div className="chatBottom">
 				<div className="inputFeild">
-					<input type="text" placeholder="Write a message. Be Nice." />
+					<input type="text" placeholder="Write a message. Be Nice." onKeyPress={(e) => keyDownHandler(e)} ref={inputRef}/>
 					<button><Icon icon={faPlus}/></button>
 					<button>😃</button>
 				</div>

@@ -12,7 +12,6 @@ function Sidebar() {
 		axios.get(request)
 			.then(res => {
 				if(typeof res.data[0] !== undefined) {
-					console.log(true)
 					setUsers(res.data)
 				}
 			})
@@ -22,7 +21,7 @@ function Sidebar() {
 			<div className="chats">
 				{users && users.map(user => {
 					return (
-						<ChatBtn channelName={user.displayName} channelID={user.uid} image={user.photoURL}/>
+						<ChatBtn key={user.uid} channelName={user.displayName} channelID={user.uid} image={user.photoURL}/>
 					)
 				})}
 			</div>

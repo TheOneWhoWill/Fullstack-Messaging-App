@@ -5,7 +5,7 @@ import { verifyIDToken } from '../middleware/auth.js';
 const router = express.Router()
 
 // Get Messages
-router.get('/messages/:id', (req, res) => {
+router.get('/messages/:id', verifyIDToken, (req, res) => {
 	let currentUser = req.uid;
 	let secondParty = req.params.id;
 	

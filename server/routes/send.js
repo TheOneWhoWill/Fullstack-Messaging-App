@@ -12,6 +12,7 @@ router.post('/message', verifyIDToken, (req, res) => {
 			type: 'user',
 			uid: req.body.recipient
 		},
+		timestamp: Math.round((new Date()).getTime() / 1000),
 		body: req.body.msg,
 		members: [req.body.sender, req.body.recipient]
   }

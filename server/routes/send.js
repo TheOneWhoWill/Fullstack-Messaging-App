@@ -12,7 +12,8 @@ router.post('/message', verifyIDToken, (req, res) => {
 			type: 'user',
 			uid: req.body.recipient
 		},
-		body: req.body.msg
+		body: req.body.msg,
+		members: [req.body.sender, req.body.recipient]
   }
 	Message.create(message);
 })

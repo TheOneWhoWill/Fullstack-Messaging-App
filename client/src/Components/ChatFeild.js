@@ -15,13 +15,23 @@ function ChatFeild() {
 	
 	useEffect(() => {
 		let query = `${process.env.REACT_APP_BASE_URL}/auth/get/user/${id}`;
+		let getMsgQuery = `${process.env.REACT_APP_BASE_URL}/retrieve/messages/${id}`;
+
 		axios.get(query)
 			.then(res => {
 				if(typeof res.data !== String) {
 					setUserData(res.data);
 				}
 			})
-	})
+		firebase.auth().currentUser.getIdToken(true)
+			.then(idToken => {
+				axios.get(getMsgQuery, {token: idToken})
+					.then(response => {
+						console.log(response.data);
+					})
+			})
+			.catch(err => {console.log(err)})
+	}, [])
 
 	function sendMessage() {
 		firebase.auth().currentUser.getIdToken(true)

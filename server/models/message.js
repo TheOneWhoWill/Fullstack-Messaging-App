@@ -13,7 +13,8 @@ const messageSchema = mongoose.Schema({
 	body: {
 		type: String,
 		required: true
-	}
+	},
+	members: Array
 })
 
 export default mongoose.model('messages', messageSchema);

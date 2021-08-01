@@ -5,6 +5,7 @@ import admin from 'firebase-admin';
 import compression from 'compression';
 import authRouter from './routes/auth.js';
 import sendRouter from './routes/send.js';
+import getRouter from './routes/retrieve.js';
 import serviceAccount from './private/key.js';
 
 dotenv.config()
@@ -34,5 +35,6 @@ app.use(function(req, res, next) {
 
 app.use('/auth', authRouter)
 app.use('/send', sendRouter)
+app.use('/retrieve', getRouter)
 
 app.listen(PORT, () => console.log(`Server Started on port ${PORT}`))

@@ -15,7 +15,7 @@ function Sidebar() {
 					setUsers(res.data)
 				}
 			})
-	})
+	}, [])
 	return (
 		<div className="sideBar">
 			<div className="chats">

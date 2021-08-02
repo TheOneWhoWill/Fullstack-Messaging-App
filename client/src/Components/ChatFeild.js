@@ -7,30 +7,41 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 
+async function getMessgaes(query, setMessages) {
+	let idToken = await firebase.auth().currentUser.getIdToken(true);
+	
+	let request = {token: idToken}
+	axios.get(query, request)
+		.then(res => {
+			if(typeof res.data !== String) {
+				setMessages(res.data)
+				console.log(res.data)
+			} else {
+				console.log(res.data)
+			}
+		})
+}
+
 function ChatFeild() {
 	const { id } = useParams();
 	const inputRef = useRef(null);
 	const { currentUser } = useAuth();
 	let [userData, setUserData] = useState();
+	let [messages, setMessages] = useState();
 	
 	useEffect(() => {
 		let query = `${process.env.REACT_APP_BASE_URL}/auth/get/user/${id}`;
 		let getMsgQuery = `${process.env.REACT_APP_BASE_URL}/retrieve/messages/${id}`;
-
+		// User Data being fetched
 		axios.get(query)
 			.then(res => {
 				if(typeof res.data !== String) {
 					setUserData(res.data);
 				}
 			})
-		firebase.auth().currentUser.getIdToken(true)
-			.then(idToken => {
-				axios.get(getMsgQuery, {token: idToken})
-					.then(response => {
-						console.log(response.data);
-					})
-			})
-			.catch(err => {console.log(err)})
+		// Messages being fetched
+		getMessgaes(getMsgQuery, setMessages)
+		console.log(messages)
 	}, [])
 
 	function sendMessage() {

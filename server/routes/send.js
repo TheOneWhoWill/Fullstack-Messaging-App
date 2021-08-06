@@ -9,7 +9,8 @@ router.post('/message', verifyIDToken, (req, res) => {
 	const message = {
     sender: {
 			uid: req.body.sender,
-			name: req.body.senderName
+			name: req.body.senderName,
+			photo: req.body.senderImg
 		},
 		recipient: {
 			type: 'user',

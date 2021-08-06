@@ -56,6 +56,7 @@ function ChatFeild() {
 					msg: inputRef.current.value,
 					sender: currentUser.uid,
 					recipient: id,
+					senderImg: currentUser.photoURL,
 					senderName: currentUser.displayName,
 				}
 				axios.post(query, request)
@@ -87,6 +88,7 @@ function ChatFeild() {
 							sender={message.sender.name}
 							timestamp={new Date(message.timestamp).toLocaleDateString()}
 							msg={message.body}
+							img={message.sender.photo}
 						/>
 					)
 				})}

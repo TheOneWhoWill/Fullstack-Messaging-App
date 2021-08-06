@@ -12,11 +12,10 @@ async function getMessgaes(query, setMessages) {
 		let request = {
 			token: idToken
 		}
-		axios.get(query, request)
+		axios.post(query, request)
 			.then(res => {
 				if(typeof res.data !== String) {
 					setMessages(res.data)
-					console.log(res.data)
 				} else {
 					console.log(res.data)
 				}
@@ -29,7 +28,7 @@ function ChatFeild() {
 	const inputRef = useRef(null);
 	const { currentUser } = useAuth();
 	let [userData, setUserData] = useState();
-	let [messages, setMessages] = useState();
+	let [messages, setMessages] = useState(null);
 	
 	useEffect(() => {
 		let query = `${process.env.REACT_APP_BASE_URL}/auth/get/user/${id}`;
@@ -45,7 +44,6 @@ function ChatFeild() {
 			})
 		// Messages being fetched
 		getMessgaes(getMsgQuery, setMessages)
-		console.log(messages)
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
@@ -84,6 +82,15 @@ function ChatFeild() {
 					timestamp="Now"
 					msg={`The User you are trying to reach does not exist or could not be found`}						img="https://lh3.googleusercontent.com/a-/AOh14Gh4AMmiTs7xghlj45muuEGWp7GQYQ3D6yhC7xwCww=s96-c"
 				/>
+				{messages && messages.map(message => {
+					return (
+						<Message
+							sender={message.sender}
+							timestamp={new Date(message.timestamp * 1000).toLocaleDateString()}
+							msg={message.body}
+						/>
+					)
+				})}
 			</div>
 			<div className="chatBottom">
 				<div className="inputFeild">

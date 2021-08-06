@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 // Message Schema
 const messageSchema = mongoose.Schema({
 	sender: {
-		type: String,
+		type: Object,
 		required: true
 	},
 	recipient: {

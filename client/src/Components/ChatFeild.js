@@ -55,7 +55,8 @@ function ChatFeild() {
 					token: idToken,
 					msg: inputRef.current.value,
 					sender: currentUser.uid,
-					recipient: id
+					recipient: id,
+					senderName: currentUser.displayName,
 				}
 				axios.post(query, request)
 					.then(response => {
@@ -86,7 +87,7 @@ function ChatFeild() {
 					return (
 						<Message
 							sender={message.sender}
-							timestamp={new Date(message.timestamp * 1000).toLocaleDateString()}
+							timestamp={new Date(message.timestamp).toLocaleDateString()}
 							msg={message.body}
 						/>
 					)

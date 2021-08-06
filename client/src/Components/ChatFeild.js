@@ -8,18 +8,20 @@ import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 
 async function getMessgaes(query, setMessages) {
-	let idToken = await firebase.auth().currentUser.getIdToken(true);
-	
-	let request = {token: idToken}
-	axios.get(query, request)
-		.then(res => {
-			if(typeof res.data !== String) {
-				setMessages(res.data)
-				console.log(res.data)
-			} else {
-				console.log(res.data)
-			}
-		})
+	firebase.auth().currentUser.getIdToken(true).then(idToken => {
+		let request = {
+			token: idToken
+		}
+		axios.get(query, request)
+			.then(res => {
+				if(typeof res.data !== String) {
+					setMessages(res.data)
+					console.log(res.data)
+				} else {
+					console.log(res.data)
+				}
+			})
+	})
 }
 
 function ChatFeild() {
@@ -37,11 +39,14 @@ function ChatFeild() {
 			.then(res => {
 				if(typeof res.data !== String) {
 					setUserData(res.data);
+				} else {
+					console.log(res.data);
 				}
 			})
 		// Messages being fetched
 		getMessgaes(getMsgQuery, setMessages)
 		console.log(messages)
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	function sendMessage() {
@@ -56,7 +61,7 @@ function ChatFeild() {
 				}
 				axios.post(query, request)
 					.then(response => {
-						// Idk do something
+						inputRef.current.value = ""
 					})
 			})
 			.catch(err => {console.log(err)})

@@ -2,11 +2,10 @@ import admin from 'firebase-admin';
 
 function verifyIDToken(req, res, next) {
 	let idToken = req.body.token
-	
+
 	admin.auth().verifyIdToken(idToken)
 		.then((decodedToken) => {
-			const uid = decodedToken.uid;
-			req.uid = uid
+			req.uid = decodedToken.uid
 			next()
 		})
 		.catch(error => {

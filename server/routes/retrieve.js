@@ -5,13 +5,16 @@ import { verifyIDToken } from '../middleware/auth.js';
 const router = express.Router()
 
 // Get Messages
-router.get('/messages/:id', verifyIDToken, (req, res) => {
+router.post('/messages/:id', verifyIDToken, (req, res) => {
 	let currentUser = req.uid;
 	let secondParty = req.params.id;
 	
 	Message.find()
 		.then(messages => {
 			res.send(messages)
+		})
+		.catch(() => {
+			res.send("Cound not retrieve messages")
 		})
 })
 

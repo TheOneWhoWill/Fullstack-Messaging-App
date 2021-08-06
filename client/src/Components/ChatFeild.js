@@ -59,16 +59,14 @@ function ChatFeild() {
 					senderName: currentUser.displayName,
 				}
 				axios.post(query, request)
-					.then(response => {
-						inputRef.current.value = ""
-					})
+				inputRef.current.value = ''
 			})
 			.catch(err => {console.log(err)})
 	}
 
 	function keyDownHandler(e) {
 		if(e.key === 'Enter') {
-			sendMessage()
+			sendMessage();
 		}
 	}
 
@@ -86,7 +84,7 @@ function ChatFeild() {
 				{messages && messages.map(message => {
 					return (
 						<Message
-							sender={message.sender}
+							sender={message.sender.name}
 							timestamp={new Date(message.timestamp).toLocaleDateString()}
 							msg={message.body}
 						/>

@@ -13,4 +13,17 @@ function verifyIDToken(req, res, next) {
 		})
 }
 
-export { verifyIDToken }
+function verifyIDTokenWithParams(req, res, next) {
+	let idToken = req.params.token
+
+	admin.auth().verifyIdToken(idToken)
+		.then((decodedToken) => {
+			req.uid = decodedToken.uid
+			next()
+		})
+		.catch(error => {
+			res.send(error)
+		})
+}
+
+export { verifyIDToken, verifyIDTokenWithParams }

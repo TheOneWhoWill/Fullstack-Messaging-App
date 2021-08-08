@@ -9,7 +9,7 @@ router.post('/messages/:id', verifyIDToken, (req, res) => {
 	let currentUser = req.uid;
 	let secondParty = req.params.id;
 	
-	Message.find()
+	Message.find({members: { $size: 2, $all: [currentUser, secondParty] }})
 		.then(messages => {
 			res.send(messages)
 		})

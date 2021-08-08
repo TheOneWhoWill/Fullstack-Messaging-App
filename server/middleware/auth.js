@@ -26,4 +26,4 @@ function verifyIDTokenWithParams(req, res, next) {
 		})
 }
 
-export { verifyIDToken, verifyIDTokenWithParams }
+export { verifyIDToken, verifyIDTokenWithParams };

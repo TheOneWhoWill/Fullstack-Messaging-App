@@ -45,7 +45,7 @@ function ChatFeild() {
 		// Messages being fetched
 		getMessgaes(getMsgQuery, setMessages)
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+	}, [id])
 
 	function sendMessage() {
 		firebase.auth().currentUser.getIdToken(true)

@@ -31,6 +31,7 @@ function ChatFeild() {
 	let [messages, setMessages] = useState(null);
 	
 	useEffect(() => {
+		setMessages(null)
 		let query = `${process.env.REACT_APP_BASE_URL}/auth/get/user/${id}`;
 		let getMsgQuery = `${process.env.REACT_APP_BASE_URL}/retrieve/messages/${id}`;
 		// User Data being fetched
@@ -77,11 +78,6 @@ function ChatFeild() {
 				<h4>💬 #{userData && userData.displayName}</h4>
 			</div>
 			<div className="MessageSection">
-				<Message
-					sender="Pixel System Message"
-					timestamp="Now"
-					msg={`The User you are trying to reach does not exist or could not be found`}						img="https://lh3.googleusercontent.com/a-/AOh14Gh4AMmiTs7xghlj45muuEGWp7GQYQ3D6yhC7xwCww=s96-c"
-				/>
 				{messages && messages.map(message => {
 					return (
 						<Message

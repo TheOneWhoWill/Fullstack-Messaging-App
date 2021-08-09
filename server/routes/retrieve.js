@@ -8,14 +8,19 @@ const router = express.Router()
 router.post('/messages/:id', verifyIDToken, (req, res) => {
 	let currentUser = req.uid;
 	let secondParty = req.params.id;
-	
-	Message.find({members: { $size: 2, $all: [currentUser, secondParty] }})
-		.then(messages => {
-			res.send(messages)
-		})
-		.catch(() => {
-			res.send("Cound not retrieve messages")
-		})
+	//{members: { $size: 2, $all: [currentUser, secondParty] }}
+
+	if(currentUser !== secondParty) {
+		Message.find({ $and: [{members: { $all: [currentUser, secondParty] }}, {members: { $size: 2}}] })
+			.then(messages => {
+				res.send(messages)
+			})
+			.catch(() => {
+				res.send("Cound not retrieve messages")
+			})
+	} else {
+		res.send([])
+	}
 })
 
 

@@ -34,7 +34,7 @@ app.use((req, res, next) => {
   next();
 });
 
-io.on('connection', socket => initialize(socket))
+io.on('connection', socket => initialize(socket, io))
 
 app.use('/auth', authRouter)
 app.use('/send', sendRouter)

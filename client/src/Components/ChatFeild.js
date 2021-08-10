@@ -1,6 +1,6 @@
 import axios from 'axios';
+import firebase from 'firebase';
 import Message from './Message';
-import firebase from 'firebase'
 import { useParams } from "react-router-dom";
 import { useAuth } from '../contexts/AuthContext';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';

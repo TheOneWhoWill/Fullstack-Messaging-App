@@ -1,7 +1,8 @@
-function handling(io) {
-	io.on('connection', (socket) => {
-		console.log('Someone Connected')
+function initialize(socket) {
+	console.log('went through')
+	socket.on('message', () => {
+		console.log('message sent')
 	})
 }
 
-export { handling };
+export { initialize };

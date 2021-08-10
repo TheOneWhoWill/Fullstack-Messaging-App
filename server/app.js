@@ -8,7 +8,7 @@ import authRouter from './routes/auth.js';
 import sendRouter from './routes/send.js';
 import getRouter from './routes/retrieve.js';
 import serviceAccount from './private/key.js';
-import { handling } from './functions/socket.js';
+import { initialize } from './functions/socket.js';
 
 dotenv.config();
 
@@ -34,7 +34,7 @@ app.use((req, res, next) => {
   next();
 });
 
-handling(io)
+io.on('connection', socket => initialize(socket))
 
 app.use('/auth', authRouter)
 app.use('/send', sendRouter)

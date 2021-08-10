@@ -1,8 +1,10 @@
 import express from 'express';
+import { io } from 'socket.io-client';
 import Message from '../models/message.js';
 import { verifyIDToken } from '../middleware/auth.js';
 
 const router = express.Router()
+const socket = io.connect('http://localhost:2000')
 
 // Send Message
 router.post('/message', verifyIDToken, (req, res) => {
@@ -21,6 +23,7 @@ router.post('/message', verifyIDToken, (req, res) => {
 		members: [req.body.sender, req.body.recipient]
   }
 	Message.create(message);
+	socket.emit('message', message);
 })
 
 export default router

@@ -8,7 +8,6 @@ const router = express.Router()
 router.post('/messages/:id', verifyIDToken, (req, res) => {
 	let currentUser = req.uid;
 	let secondParty = req.params.id;
-	//{members: { $size: 2, $all: [currentUser, secondParty] }}
 
 	if(currentUser !== secondParty) {
 		Message.find({ $and: [{members: { $all: [currentUser, secondParty] }}, {members: { $size: 2}}] })

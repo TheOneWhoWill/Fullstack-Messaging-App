@@ -8,6 +8,7 @@ import authRouter from './routes/auth.js';
 import sendRouter from './routes/send.js';
 import getRouter from './routes/retrieve.js';
 import serviceAccount from './private/key.js';
+import contactRouter from './routes/contacts.js';
 import { initialize } from './functions/socket.js';
 
 dotenv.config();
@@ -39,5 +40,6 @@ io.on('connection', socket => initialize(socket, io))
 app.use('/auth', authRouter)
 app.use('/send', sendRouter)
 app.use('/retrieve', getRouter)
+app.use('/contacts', contactRouter)
 
 server.listen(PORT, () => console.log(`Server Started on port ${PORT}`))

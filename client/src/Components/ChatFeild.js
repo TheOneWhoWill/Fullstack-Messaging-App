@@ -1,7 +1,7 @@
 import axios from 'axios';
 import firebase from 'firebase';
 import Message from './Message';
-import { io } from 'socket.io-client';
+//import { io } from 'socket.io-client';
 import { useParams } from "react-router-dom";
 import { useAuth } from '../contexts/AuthContext';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -30,11 +30,11 @@ function ChatFeild() {
 	const { currentUser } = useAuth();
 	let [userData, setUserData] = useState();
 	let [messages, setMessages] = useState(null);
-	const socket = io(process.env.REACT_APP_BASE_URL)
+	//const socket = io(process.env.REACT_APP_BASE_URL)
 
-	socket.on('message', message => {
-		setMessages([...messages, message])
-	})
+	//socket.on('message', message => {
+	//	setMessages([...messages, message])
+	//})
 	
 	useEffect(() => {
 		setMessages(null)
@@ -71,22 +71,22 @@ function ChatFeild() {
 						setMessages([...messages, message])
 					});
 				inputRef.current.value = '';
-				let message = {
-					socketID: socket.id,
-					sender: {
-						uid: request.sender,
-						name: request.senderName,
-						photo: request.senderImg
-					},
-					recipient: {
-						type: 'user',
-						uid: request.recipient
-					},
-					timestamp: Math.round((new Date()).getTime()),
-					body: request.msg,
-					members: [request.sender, request.recipient]
-				}
-				socket.emit('message', message)
+				//let message = {
+					//socketID: socket.id,
+					//sender: {
+					//	uid: request.sender,
+					//	name: request.senderName,
+					//	photo: request.senderImg
+					//},
+					//recipient: {
+					//	type: 'user',
+					//	uid: request.recipient
+					//},
+					//timestamp: Math.round((new Date()).getTime()),
+					//body: request.msg,
+					//members: [request.sender, request.recipient]
+				//}
+				//socket.emit('message', message)
 			})
 			.catch(err => {console.log(err)})
 	}

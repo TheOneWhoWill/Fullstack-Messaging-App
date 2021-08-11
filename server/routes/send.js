@@ -19,7 +19,7 @@ router.post('/message', verifyIDToken, (req, res) => {
 			uid: req.body.recipient
 		},
 		timestamp: Math.round((new Date()).getTime()),
-		body: req.body.msg,
+		body: req.body.msg || '[Empty Msg]',
 		members: [req.body.sender, req.body.recipient]
   }
 	Message.create(message);

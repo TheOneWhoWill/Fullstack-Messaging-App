@@ -26,4 +26,15 @@ function verifyIDTokenWithParams(req, res, next) {
 		})
 }
 
-export { verifyIDToken, verifyIDTokenWithParams };
+function verifySocket(idToken) {
+	admin.auth().verifyIdToken(idToken)
+		.then((decodedToken) => {
+			return decodedToken.uid
+		})
+		.catch(error => {
+			res.send(error)
+		})
+}
+
+
+export { verifyIDToken, verifyIDTokenWithParams, verifySocket };

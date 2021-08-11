@@ -22,8 +22,9 @@ router.post('/message', verifyIDToken, (req, res) => {
 		body: req.body.msg || '[Empty Msg]',
 		members: [req.body.sender, req.body.recipient]
   }
-	Message.create(message);
-	socket.emit('message', message);
+	Message.create(message)
+		.then(msg => res.send(msg))
+		.catch(err => console.log(err))
 })
 
 export default router

@@ -66,7 +66,10 @@ function ChatFeild() {
 					senderImg: currentUser.photoURL,
 					senderName: currentUser.displayName,
 				}
-				axios.post(query, request);
+				axios.post(query, request)
+					.then(message => {
+						setMessages([...messages, message])
+					});
 				inputRef.current.value = '';
 				let message = {
 					socketID: socket.id,

@@ -9,21 +9,6 @@ async function createToken(uid) {
 }
 
 // Get Users
-router.get('/get/users', (req, res) => {
-	function pluck(array, key, key2, key3) {
-		return array.map(function(item) { return {uid: item[key], displayName: item[key2], photoURL: item[key3]}; });
-	}
-
-	admin.auth().listUsers(10)
-		.then(result => {
-			res.send(pluck(result.users, 'uid', 'displayName', 'photoURL'))
-		})
-		.catch((error) => {
-			res.send('Unable to fetch users: ' + error)
-		})
-})
-
-// Get Users
 router.get('/get/user/:uid', (req, res) => {
 	let uid = req.params.uid;
 
@@ -42,7 +27,6 @@ router.get('/get/user/:uid', (req, res) => {
 			res.send('Unable to fetch users: ' + error)
 		})
 })
-
 
 // Create Custom Token
 router.get('/create/token', verifyIDToken, (req, res) => {

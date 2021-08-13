@@ -8,7 +8,7 @@ const messageSchema = mongoose.Schema({
 	},
 	contacts: {
 		required: true,
-		type: Object
+		type: Array
 	},
 	customInvites: {
 		required: false,

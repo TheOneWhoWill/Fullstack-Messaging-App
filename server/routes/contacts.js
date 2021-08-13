@@ -1,6 +1,6 @@
 import express from 'express';
 import admin from 'firebase-admin';
-import Message from '../models/message.js';
+import User from '../models/users.js';
 import { verifyIDToken } from '../middleware/auth.js';
 
 const router = express.Router()
@@ -22,16 +22,15 @@ router.post('/get', verifyIDToken, (req, res) => {
 
 // Add Contact
 router.post('/add', verifyIDToken, (req, res) => {
-	function pluck(array, key, key2, key3) {
-		return array.map(function(item) { return {uid: item[key], displayName: item[key2], photoURL: item[key3]}; });
-	}
+	let uid = req.uid
 
-	admin.auth().listUsers(10)
-		.then(result => {
-			res.send(pluck(result.users, 'uid', 'displayName', 'photoURL'))
+	User.findOne({uid: uid})
+		.then(user => {
+			user.contacts = [...user.contacts, req.body.requestedParty]
+			user.save();
 		})
-		.catch((error) => {
-			res.send('Unable to fetch users: ' + error)
+		.catch(error => {
+			console.log(error)
 		})
 })
 

@@ -2,14 +2,7 @@ import http from 'http';
 import dotenv from 'dotenv';
 import express from 'express';
 import mongoose from 'mongoose';
-import admin from 'firebase-admin';
-import { Server } from 'socket.io';
-import authRouter from './routes/auth.js';
-import sendRouter from './routes/send.js';
-import getRouter from './routes/retrieve.js';
-import serviceAccount from './private/key.js';
-import contactRouter from './routes/contacts.js';
-import { initialize } from './functions/socket.js';
+import titleRouter from './routes/title.js';
 
 dotenv.config();
 
@@ -17,11 +10,6 @@ const app = express();
 const dbURL = process.env.DBKey;
 const PORT = process.env.PORT || 2000;
 const server = http.createServer(app);
-const io = new Server(server, {cors: { origin: '*' }});
-
-admin.initializeApp({
-	credential: admin.credential.cert(serviceAccount)
-})
 
 mongoose.connect(dbURL, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => console.log('Connected to MongoDB!')).catch((error) => console.log(error));
 
@@ -35,11 +23,6 @@ app.use((req, res, next) => {
   next();
 });
 
-io.on('connection', socket => initialize(socket, io))
-
-app.use('/auth', authRouter)
-app.use('/send', sendRouter)
-app.use('/retrieve', getRouter)
-app.use('/contacts', contactRouter)
+app.use('/Feed', titleRouter)
 
 server.listen(PORT, () => console.log(`Server Started on port ${PORT}`))

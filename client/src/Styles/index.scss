@@ -16,14 +16,13 @@ $globalgrey: #3d3d3f;
 }
 
 #root {
-	background: #2275e0;
+	background: #1d4274;
 }
 
 html, body, .App {
 	height: 100%;
 }
 
-@import './UserTab.scss';
 @import './Body.scss';
 @import './Login.scss';
 @import './Components.scss';

@@ -103,3 +103,125 @@
 		fill: rgb(70, 235, 70);
 	}
 }
+
+.sideBar {
+	width: 100%;
+	height: 5rem;
+	display: grid;
+	padding: 0 1.8rem;
+	align-items: center;
+	background: $headerTheme;
+	justify-content: space-between;
+	grid-template-columns: auto 48px;
+	border-bottom: 2px solid $headerBorder;
+}
+
+// User Profile in sideBar
+.profileImage {
+	width: 100%;
+	height: 100%;
+	border-radius: 20%;
+	background: $headerBorder;
+}
+
+#dropdown-basic {
+	margin: 0;
+	padding: 0;
+	border: none;
+	background: none;
+	height: 48px;
+}
+
+.dropdown {
+	width: 48px;
+}
+
+.menu {
+	margin: 4px;
+	width: 120px;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	border-radius: 0.5rem;
+	background-color: $headerTheme;
+	border: 0.13rem solid $headerBorder;
+}
+
+.item {
+	padding: 4px 12px;
+	border: none;
+	text-decoration: none;
+}
+
+.item:hover {
+	background: #ffffff1a;
+}
+
+.signInBtn {
+	border: none;
+	outline: none;
+	font-size: 15px;
+	padding: 5px 10px;
+	border-radius: 4px;
+	background: #00aeff;
+}
+
+.menu {
+	display: none;
+}
+
+.dropdown-toggle::after {
+	display: none;
+}
+
+.btn-success {
+	display: none;
+}
+//VideoCard and Main
+.main {
+	display: grid;
+	flex-wrap: wrap;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.videoCard {
+	width: 280px;
+	height: 240px;
+	margin: 0 auto;
+}
+
+.thumbnail {
+	overflow: hidden;
+	aspect-ratio: 16/9;
+	position: relative;
+	background-size: contain;
+	background-repeat: no-repeat;
+	.timestamp {
+		right: 10px;
+		bottom: 5px;
+		background: #000;
+		position: absolute;
+		padding: 1px 6px;
+		font-size: 12px;
+		border-radius: 6px;
+	}
+	img {
+		width: 280px;
+	}
+}
+
+.bottom {
+	display: grid;
+	grid-template-columns: 50px auto;
+	.left{
+		background-color: red;
+		img {
+			margin: 0 auto;
+		}
+	}
+}
+
+@media only screen and (max-width: 560px) {
+	.videoCard {
+		background-color: rgb(204, 7, 7);
+	}
+}

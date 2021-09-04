@@ -40,6 +40,10 @@ html, body, .App {
 	height: 100%;
 }
 
+.App {
+	padding-top: 5.4rem;
+}
+
 @import './Body.scss';
 @import './Login.scss';
 @import './Components.scss';

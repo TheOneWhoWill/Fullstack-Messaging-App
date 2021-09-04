@@ -107,7 +107,7 @@
 // User Profile in sideBar
 .profileImage {
 	width: 100%;
-	height: 100%;
+	aspect-ratio: 1/1;
 	border-radius: 20%;
 	background: $headerBorder;
 }

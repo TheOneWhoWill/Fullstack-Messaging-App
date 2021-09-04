@@ -27,7 +27,7 @@ function SignedInBtn(props) {
 			</Dropdown>
 		)
 	} else {
-		return <img className="profileImage" src="https://lh3.googleusercontent.com/a-/AOh14Gh4AMmiTs7xghlj45muuEGWp7GQYQ3D6yhC7xwCww=s96-c" alt="ProfilePic" />
+		return <></>
 	}
 }
 
@@ -36,10 +36,10 @@ function Header() {
 
 	return (
 		<SignedInBtn
-			img={currentUser.photoURL}
+			img={currentUser && currentUser.photoURL}
 			logout={logout}
-			uid={currentUser.uid}
-			displayName={currentUser.displayName}
+			uid={currentUser && currentUser.uid}
+			displayName={currentUser && currentUser.displayName}
 		/>
 	)
 }

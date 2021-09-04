@@ -16,3 +16,24 @@
 		color: #fff;
 	}
 }
+
+@media only screen and (min-width: 560px) {
+	.Home {
+		padding: 5.4rem 1.8rem 0 1.8rem;
+	}	
+}
+
+.Header {
+	top: 0;
+	width: 100%;
+	height: 5rem;
+	display: grid;
+	z-index: 1233;
+	position: fixed;
+	padding: 0 1.8rem;
+	align-items: center;
+	background: $headerTheme;
+	justify-content: space-between;
+	grid-template-columns: auto 48px;
+	border-bottom: 2px solid $headerBorder;
+}

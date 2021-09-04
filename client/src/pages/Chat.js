@@ -1,10 +1,10 @@
 import React from 'react'
-import Sidebar from '../Components/Sidebar'
+import Header from '../Components/Header'
 
 function Chat() {
 	return (
 		<div className="chatPage">
-			<Sidebar />
+			<Header />
 		</div>
 	)
 }

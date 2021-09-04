@@ -15,8 +15,25 @@ $globalgrey: #3d3d3f;
 	font-family: 'Roboto', sans-serif;
 }
 
+*::-webkit-scrollbar {
+	width: 7px;
+}
+
+*::-webkit-scrollbar-track {
+  background: none; 
+}
+
+*::-webkit-scrollbar-thumb {
+	border-radius: 10px;
+  background: #ffffff;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #bebebe;
+}
+
 #root {
-	background: #1d4274;
+	background: #303030;
 }
 
 html, body, .App {

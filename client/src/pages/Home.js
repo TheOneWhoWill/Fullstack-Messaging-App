@@ -1,4 +1,5 @@
 import axios from 'axios'
+import FriendlyTime from '../functions/GetTime';
 import React, { useEffect, useState } from 'react'
 
 function VideoCard(props) {
@@ -15,6 +16,8 @@ function VideoCard(props) {
 					<div className="title">
 						Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quae, nihil? Doloribus cupiditate architecto atque distinctio repellendus veritatis aspernatur nisi vero illo odit vitae eum in, rerum quisquam eius corrupti alias quam dolorem quos, accusantium vel consequatur maiores. Neque, magnam alias?
 					</div>
+					<div className="publisherName">Studio C</div>
+					<div className="generalInfo">{props.views} views • {props.publishedDate}</div>
 				</div>
 			</div>
 		</div>
@@ -38,11 +41,13 @@ function Home() {
 				{shows && shows.map(show => {
 					return (
 						<VideoCard
-							img={`https://image.tmdb.org/t/p/w400/${show.backdrop_path}`}
+							img={`https://image.tmdb.org/t/p/w500/${show.backdrop_path}`}
 							score={show.vote_average}
 							title={show.name}
 							lang={show.original_language}
 							audience="TV-14"
+							views={show.vote_count}
+							publishedDate={FriendlyTime(new Date(show.first_air_date))}
 						/>
 					)
 				})}

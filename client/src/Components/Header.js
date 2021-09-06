@@ -1,13 +1,13 @@
 import React from 'react'
 import UserTab from './UserTab';
 
-function Sidebar() {
+function Header() {
 	return (
 		<div className="Header">
-			<h2>Pixels</h2>
+			<h3>Pixels</h3>
 			<UserTab className="UserTab" />
 		</div>
 	)
 }
 
-export default Sidebar
+export default Header

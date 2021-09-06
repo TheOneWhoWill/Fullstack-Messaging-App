@@ -4,9 +4,9 @@ import { useState, useRef } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 
 function Login(props) {
+	const { login } = useAuth();
 	let [show, setShow] = useState(false);
 	let passwdRef = useRef(null);
-	const { login } = useAuth();
 	let emailRef = useRef(null);
 
 	function LoginUser() {

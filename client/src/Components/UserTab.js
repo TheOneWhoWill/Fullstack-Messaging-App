@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -27,7 +28,7 @@ function SignedInBtn(props) {
 			</Dropdown>
 		)
 	} else {
-		return <></>
+		return <Link className="signInBtn" to={`/Auth/to/Home`}>Sign In</Link>
 	}
 }
 

@@ -221,13 +221,14 @@
 		}
 	}
 	.right {
+		font-size: 1rem;
 		.title {
-			height: 40px;
+			height: auto;
 			line-clamp: 2;
+			max-height: 40px;
 			max-height: 4rem;
 			overflow: hidden;
 			font-weight: 500;
-			font-size: 0.85rem;
 			white-space: wrap;
 			text-overflow: ellipsis;
 		}

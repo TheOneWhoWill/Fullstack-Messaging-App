@@ -172,6 +172,15 @@
 .btn-success {
 	display: none;
 }
+
+.HeaderIcon {
+	font-size: 40px;
+}
+
+.HeaderIcon:hover path {
+	fill: $globalblue;
+	transition: 0.3s ease;
+}
 //VideoCard and Main
 .postSection {
 	height: 100%;

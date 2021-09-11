@@ -35,8 +35,14 @@
 	height: $headerHeight;
 	background: $headerTheme;
 	justify-content: space-between;
-	grid-template-columns: auto 80px;
+	grid-template-columns: auto 120px;
 	border-bottom: 2px solid $headerBorder;
+}
+
+.Header .right {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 }
 // sideBar
 .sideBar {

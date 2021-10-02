@@ -3,6 +3,8 @@ import dotenv from 'dotenv';
 import express from 'express';
 import mongoose from 'mongoose';
 import titleRouter from './routes/title.js';
+import fileUpload from 'express-fileupload';
+import uploadRouter from './routes/upload.js';
 
 dotenv.config();
 
@@ -15,7 +17,9 @@ mongoose.connect(dbURL, { useNewUrlParser: true, useUnifiedTopology: true }).the
 
 app.use(express.json({type: ['application/json', 'text/plain']}));
 app.use(express.urlencoded({ extended: true }));
-//app.use(bodyParser.json())	
+app.use(fileUpload({
+	createParentPath: true
+}));
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
@@ -24,5 +28,6 @@ app.use((req, res, next) => {
 });
 
 app.use('/Feed', titleRouter)
+app.use('/Upload', uploadRouter)
 
 server.listen(PORT, () => console.log(`Server Started on port ${PORT}`))

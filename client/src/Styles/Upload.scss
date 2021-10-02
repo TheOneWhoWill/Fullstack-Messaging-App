@@ -1,0 +1,41 @@
+.Upload {
+	height: 100%;
+	display: grid;
+	grid-template-rows: 5rem auto;
+	.topBar {
+		display: grid;
+		padding: 0 2rem;
+		align-items: center;
+		justify-content: space-between;
+		grid-template-columns: auto auto;
+		border-bottom: 1px solid $headerBorder;
+		svg {
+			font-size: 2.5rem;
+		}
+	}
+	.files {
+		padding: 0 2rem;
+	}
+}
+
+.modalOverlay {
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	position: fixed;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.ReactModal__Content {
+	gap: 1rem;
+	display: grid;
+	grid-template-rows: auto auto;
+}
+
+.uploadBtn {
+	border: none;
+	padding: 0.5rem 0;
+	border-radius: 1rem;
+	background: $globalblue;
+}

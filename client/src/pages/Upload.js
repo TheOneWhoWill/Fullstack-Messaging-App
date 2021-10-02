@@ -35,7 +35,7 @@ function Upload() {
 		<div className="Upload">
 			<Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles} overlayClassName="modalOverlay">
 				<input type="file" onChange={fileChangeHandler} />
-				<button className="uploadBtn" onClick={fileUpload}>Upload</button>
+				<button className="uploadBtn" onClick={fileUpload}>Upload Video</button>
 			</Modal>
 			<div className="topBar">
 				<h2>Profile content</h2>

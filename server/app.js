@@ -2,9 +2,16 @@ import http from 'http';
 import dotenv from 'dotenv';
 import express from 'express';
 import mongoose from 'mongoose';
+import admin from 'firebase-admin';
 import titleRouter from './routes/title.js';
 import fileUpload from 'express-fileupload';
 import uploadRouter from './routes/upload.js';
+import serviceAccount from './private/key.js';
+
+admin.initializeApp({
+	credential: admin.credential.cert(serviceAccount),
+	storageBucket: 'webflix-c9265.appspot.com'
+})
 
 dotenv.config();
 

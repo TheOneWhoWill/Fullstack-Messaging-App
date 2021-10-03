@@ -1,10 +1,10 @@
 import http from 'http';
 import dotenv from 'dotenv';
+import './aws/initalize.js'
 import express from 'express';
 import mongoose from 'mongoose';
 import admin from 'firebase-admin';
 import titleRouter from './routes/title.js';
-import fileUpload from 'express-fileupload';
 import uploadRouter from './routes/upload.js';
 import serviceAccount from './private/key.js';
 
@@ -24,9 +24,6 @@ mongoose.connect(dbURL, { useNewUrlParser: true, useUnifiedTopology: true }).the
 
 app.use(express.json({type: ['application/json', 'text/plain']}));
 app.use(express.urlencoded({ extended: true }));
-app.use(fileUpload({
-	createParentPath: true
-}));
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");

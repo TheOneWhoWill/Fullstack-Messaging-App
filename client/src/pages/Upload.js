@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Modal from 'react-modal';
 import React, { useState } from 'react';
+import { useAuth } from '../contexts/AuthContext';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 
@@ -9,6 +10,7 @@ function Upload() {
 	const closeModal = () => setIsOpen(false);
 	const [video, setVideo] = useState(null);
 	const openModal = () => setIsOpen(true);
+	const { currentUser } = useAuth();
 	const customStyles = {
   	content: {
    		top: '50%',
@@ -26,9 +28,20 @@ function Upload() {
 	}
 
 	function fileUpload() {
-		const data = new FormData()
-		data.append("video", video)
-		axios.post(`${process.env.REACT_APP_BASE_URL}/Upload`, data)
+		// Get id token to add to form data
+		currentUser && currentUser.getIdToken(true).then((idToken) => {
+			let data = new FormData();
+			data.append("video", video)
+			data.append("token", idToken)
+			axios({
+				url: `${process.env.REACT_APP_BASE_URL}/Upload`,
+				method: 'POST',
+				data: data,
+				body: data
+			})
+		}).catch((error) => {
+			console.log(error)
+		});
 	}
 
 	return (

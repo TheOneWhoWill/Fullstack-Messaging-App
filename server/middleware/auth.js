@@ -1,15 +1,23 @@
+import fs from 'fs';
 import admin from 'firebase-admin';
 
-function verifyIDToken(req, res, next) {
-	let idToken = req.body.token
+function clearFiles(file) {
+	if(file) {
+		fs.unlinkSync(`uploads/${file.filename}`)
+	}
+}
 
-	admin.auth().verifyIdToken(idToken)
+function verifyIDToken(req, res, next) {
+	let idToken = req.body.token;
+
+	idToken && admin.auth().verifyIdToken(idToken)
 		.then((decodedToken) => {
 			req.uid = decodedToken.uid
 			next()
 		})
 		.catch(error => {
 			res.send(error)
+			clearFiles(req.file)
 		})
 }
 

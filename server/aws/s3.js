@@ -19,13 +19,13 @@ const s3 = new AWS.S3({
 // file upload to aws bucket will return 
 // the url of the file back to wherever
 // the function is called
-function awsFileUpload(file) {
+function awsFileUpload(file, uid) {
 	const fileStream = fs.createReadStream(file.path)
 
 	const uploadParams = {
 		Bucket: bucketName,
 		Body: fileStream,
-		Key: file.filename
+		Key: `${uid}/${file.filename}`
 	}
 
 	return s3.upload(uploadParams).promise()

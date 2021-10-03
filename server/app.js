@@ -1,6 +1,5 @@
+import './aws/s3.js'
 import http from 'http';
-import dotenv from 'dotenv';
-import './aws/initalize.js'
 import express from 'express';
 import mongoose from 'mongoose';
 import admin from 'firebase-admin';
@@ -12,8 +11,6 @@ admin.initializeApp({
 	credential: admin.credential.cert(serviceAccount),
 	storageBucket: 'webflix-c9265.appspot.com'
 })
-
-dotenv.config();
 
 const app = express();
 const dbURL = process.env.DBKey;

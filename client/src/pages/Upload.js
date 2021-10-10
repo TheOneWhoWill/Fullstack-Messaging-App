@@ -1,12 +1,13 @@
 import axios from 'axios';
 import Modal from 'react-modal';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 
 function Upload() {
 	const [modalIsOpen, setIsOpen] = useState(false);
+	const [fileList, setFileList] = useState(null);
 	const closeModal = () => setIsOpen(false);
 	const [video, setVideo] = useState(null);
 	const openModal = () => setIsOpen(true);
@@ -39,10 +40,32 @@ function Upload() {
 				data: data,
 				body: data
 			})
+			.then(res => {
+				closeModal()
+				alert(res.data)
+			})
+			.catch(err => {
+				alert(err)
+				console.log(err)
+			})
 		}).catch((error) => {
 			console.log(error)
 		});
 	}
+
+	useEffect(() => {
+		currentUser && currentUser.getIdToken(true).then((idToken) => {
+			axios.post(`${process.env.REACT_APP_BASE_URL}/Upload/get`, {token: idToken})
+				.then(response => {
+					setFileList(response.data)
+				})
+				.catch(error => {
+					console.log(error)
+				})
+		})
+		.catch(err => console.log(err))
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
 
 	return (
 		<div className="Upload">
@@ -55,7 +78,6 @@ function Upload() {
 				<Icon icon={faPlus} onClick={openModal}/>
 			</div>
 			<div className="files">
-				<button>ssssssss</button>
 			</div>
 		</div>
 	)

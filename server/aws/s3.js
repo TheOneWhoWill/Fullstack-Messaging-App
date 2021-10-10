@@ -31,4 +31,4 @@ function awsFileUpload(file, uid) {
 	return s3.upload(uploadParams).promise()
 }
 
-export { awsFileUpload }
+export { awsFileUpload, s3 }

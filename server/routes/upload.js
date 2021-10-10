@@ -1,17 +1,22 @@
 import fs from 'fs';
-import path from 'path';
 import multer from 'multer';
 import express from 'express';
-import { awsFileUpload } from '../aws/s3.js'
+import multerS3 from 'multer-s3'
+import { awsFileUpload, s3 } from '../aws/s3.js'
 import { verifyIDToken } from '../middleware/auth.js'
 
 const router = express.Router()
 const storage = multer.diskStorage({
-	destination: './uploads/',
-	filename: (req, file, cb) => {
-		cb(null, file.originalname)
-		path.extname(file.originalname)
-	}
+	storage: multerS3({
+		s3: s3,
+		bucket: 'pixels-video-bucket',
+		metadata: (req, file, cb) => {
+			cb(null, {fieldName: file.fieldname});
+		},
+		key: (req, file, cb) => {
+			cb(null, `${req.uid}/${file.fieldname}`);
+		}
+	})
 })
 const upload = multer({ storage: storage });
 

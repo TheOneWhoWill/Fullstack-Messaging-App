@@ -4,6 +4,7 @@ import multer from 'multer';
 import express from 'express';
 import Videos from '../models/videos.js'
 import { awsFileUpload } from '../aws/s3.js'
+import isVideo from '../middleware/isvideo.js'
 import { verifyIDToken } from '../middleware/auth.js'
 
 const router = express.Router()
@@ -16,20 +17,19 @@ const storage = multer.diskStorage({
 })
 const upload = multer({ storage: storage });
 
-router.post('/', upload.single('video'), verifyIDToken, async (req, res) => {
+router.post('/', upload.single('video'), verifyIDToken, isVideo, async (req, res) => {
 	try {
 		// Reference to Video File
 		let videoRef = req.file;
 		// Upload to AWS
 		let awsResponse = await awsFileUpload(videoRef, req.uid)
 		// Save in MongoDB
-		let video = Videos.create({
+		Videos.create({
 			uid: req.uid,
 			video: awsResponse.Location,
-			title: awsResponse.ETag,
+			title: awsResponse.ETag.slice(1, -1),
 			publishStatus: 'Unpublished'
 		})
-		console.log(video)
 		// Delete files from local server after download
 		fs.unlinkSync(`uploads/${videoRef.filename}`)
 		// Response to client
@@ -48,6 +48,9 @@ router.post('/get', verifyIDToken, (req, res) => {
 	Videos.find({uid: req.uid})
 		.then(videos => {
 			res.send(videos)
+		})
+		.catch(() => {
+			res.status(400).send('Error finding Video Files')
 		})
 })
 

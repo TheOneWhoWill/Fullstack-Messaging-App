@@ -6,6 +6,7 @@ import admin from 'firebase-admin';
 import titleRouter from './routes/title.js';
 import uploadRouter from './routes/upload.js';
 import serviceAccount from './private/key.js';
+import videosRouter from './routes/videos.js';
 
 admin.initializeApp({
 	credential: admin.credential.cert(serviceAccount),
@@ -30,5 +31,6 @@ app.use((req, res, next) => {
 
 app.use('/Feed', titleRouter)
 app.use('/Upload', uploadRouter)
+app.use('/Videos', videosRouter)
 
 server.listen(PORT, () => console.log(`Server Started on port ${PORT}`))

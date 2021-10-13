@@ -23,12 +23,14 @@ router.post('/', upload.single('video'), verifyIDToken, isVideo, async (req, res
 		let videoRef = req.file;
 		// Upload to AWS
 		let awsResponse = await awsFileUpload(videoRef, req.uid)
+		console.log(awsResponse)
 		// Save in MongoDB
 		Videos.create({
 			uid: req.uid,
 			video: awsResponse.Location,
+			publishStatus: 'Unpublished',
+			Key: awsResponse.Key,
 			title: awsResponse.ETag.slice(1, -1),
-			publishStatus: 'Unpublished'
 		})
 		// Delete files from local server after download
 		fs.unlinkSync(`uploads/${videoRef.filename}`)

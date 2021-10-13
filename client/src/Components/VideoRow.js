@@ -8,7 +8,7 @@ function VideoRow(props) {
 	return (
 		<div className="videoRow">
 			<div className="left">
-				<h3 className="title">{video.title}</h3>
+			<h3 className="title">{video.title}</h3>
 				<p className="publishingStaus">Publishing Status: {video.publishStatus}</p>
 				<span className="rowBtn">Edit <Icon icon={faEdit} className="editIcon" /></span>
 				<span className="rowBtn">Publish</span>

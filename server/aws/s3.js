@@ -25,10 +25,19 @@ async function awsFileUpload(file, uid) {
 	const uploadParams = {
 		Bucket: bucketName,
 		Body: fileStream,
-		Key: file.filename
+		Key: `${uid}/${file.filename}`
 	}
 	// Response from AWS
 	return s3.upload(uploadParams).promise()
 }
 
-export { awsFileUpload, s3 }
+function getFileStream(fileKey) {
+  const downloadParams = {
+    Key: 'bmN87QL0MIR299Mb6pwYazsE9no1/213.mp4',
+    Bucket: bucketName
+  }
+
+  return s3.getObject(downloadParams).createReadStream()
+}
+
+export { awsFileUpload, s3, getFileStream }

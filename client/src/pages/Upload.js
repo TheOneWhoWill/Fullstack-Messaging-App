@@ -1,7 +1,8 @@
 import axios from 'axios';
 import Modal from 'react-modal';
-import React, { useState, useEffect } from 'react';
+import Row from '../Components/VideoRow';
 import { useAuth } from '../contexts/AuthContext';
+import React, { useState, useEffect } from 'react';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 
@@ -78,6 +79,9 @@ function Upload() {
 				<Icon icon={faPlus} onClick={openModal}/>
 			</div>
 			<div className="files">
+				{fileList && fileList.map(video => {
+					return <Row video={video}/>
+				})}
 			</div>
 		</div>
 	)

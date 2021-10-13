@@ -294,3 +294,48 @@
 .close {
 	font-size: 2.7rem;
 }
+// Video Upload Section List
+.videoRow {
+	display: grid;
+	padding: 1rem;
+	margin-top: 1rem;
+	border-radius: 0.5rem;
+	grid-template-columns: auto 18rem;
+	.title {
+		font-weight: 400;
+	}
+	.editIcon path {
+		color: #181818;
+	}
+	.previewLink {
+		color: $globalblue;
+		text-decoration: underline;
+	}
+	.rowBtn {
+		padding: 0.6rem;
+		color: #181818;
+		margin-right: 1rem;
+		border-radius: 0.3rem;
+		background: $globalblue;
+	}
+	.rowBtn:hover {
+		text-decoration: none;
+	}
+	.left {
+		padding-right: 0.3rem;
+	}
+	.thumbnail {
+		width: 18rem;
+		overflow: hidden;
+		background: red;
+		aspect-ratio: 16/9;
+		img {
+			width: 100%;
+		}
+	}
+}
+
+.publishingStaus {
+	font-weight: 300;
+	font-size: 1rem;
+}

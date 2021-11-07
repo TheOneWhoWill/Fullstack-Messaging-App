@@ -3,7 +3,6 @@ import path from 'path';
 import multer from 'multer';
 import express from 'express';
 import Videos from '../models/videos.js'
-import { awsFileUpload } from '../aws/s3.js'
 import isVideo from '../middleware/isvideo.js'
 import { verifyIDToken } from '../middleware/auth.js'
 
@@ -22,8 +21,6 @@ router.post('/', upload.single('video'), verifyIDToken, isVideo, async (req, res
 		// Reference to Video File
 		let videoRef = req.file;
 		// Upload to AWS
-		let awsResponse = await awsFileUpload(videoRef, req.uid)
-		console.log(awsResponse)
 		// Save in MongoDB
 		Videos.create({
 			uid: req.uid,

@@ -1,24 +1,14 @@
-import './aws/s3.js'
 import http from 'http';
+import './private/key.js';
+import './database/mongo.js'
 import express from 'express';
-import mongoose from 'mongoose';
-import admin from 'firebase-admin';
 import titleRouter from './routes/title.js';
 import uploadRouter from './routes/upload.js';
-import serviceAccount from './private/key.js';
 import videosRouter from './routes/videos.js';
 
-admin.initializeApp({
-	credential: admin.credential.cert(serviceAccount),
-	storageBucket: 'webflix-c9265.appspot.com'
-})
-
 const app = express();
-const dbURL = process.env.DBKey;
 const PORT = process.env.PORT || 2000;
 const server = http.createServer(app);
-
-mongoose.connect(dbURL, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => console.log('Connected to MongoDB!')).catch((error) => console.log(error));
 
 app.use(express.json({type: ['application/json', 'text/plain']}));
 app.use(express.urlencoded({ extended: true }));

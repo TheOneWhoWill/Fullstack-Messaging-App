@@ -1,21 +1,31 @@
+import {
+	signInWithPopup,
+	GoogleAuthProvider,
+	TwitterAuthProvider,
+	signInWithCustomToken,
+	sendPasswordResetEmail,
+	signInWithEmailAndPassword,
+	createUserWithEmailAndPassword
+} from "firebase/auth";
+import '../firebase'
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import React, { useContext, useEffect, useState } from 'react'
-import { useHistory } from "react-router-dom";
-import firebase from 'firebase/app'
-import { auth } from '../firebase'
+import { useNavigate  } from "react-router-dom";
 
 const AuthContext = React.createContext()
+const auth = getAuth();
 
 export function useAuth() {
 	return useContext(AuthContext)
 }
 
 export function AuthProvider({ children }) {
-	const history = useHistory();
+	const navigate = useNavigate();
 	const [loading, setLoading] = useState(true)
 	const [currentUser, setCurrentuser] = useState()
 
 	function signup(email, password, displayName, profile) {
-		return auth.createUserWithEmailAndPassword(email, password).then(function(result) {
+		return createUserWithEmailAndPassword(email, password).then(function(result) {
 			result.user.updateProfile({
 				displayName: displayName,
 				photoURL: profile
@@ -24,13 +34,13 @@ export function AuthProvider({ children }) {
 	}
 
 	function GoogleSignIn() {
-		var provider = new firebase.auth.GoogleAuthProvider();
-		return auth.signInWithPopup(provider)
+		var provider = new GoogleAuthProvider();
+		return signInWithPopup(provider)
 	}
 
 	function TwitterSignIn() {
-		var provider = new firebase.auth.TwitterAuthProvider();
-		return auth.signInWithPopup(provider)
+		var provider = new TwitterAuthProvider();
+		return signInWithPopup(provider)
 	}
 
 	function updateEmail(email) {
@@ -38,33 +48,37 @@ export function AuthProvider({ children }) {
 	}
 
 	function resetPassword(email) {
-		return auth.sendPasswordResetEmail(email)
+		return sendPasswordResetEmail(email)
 	}
 
 	function login(email, password) {
-		return auth.signInWithEmailAndPassword(email, password)
+		return signInWithEmailAndPassword(email, password)
 	}
 
 	function loginWithToken(token) {
-		return auth.signInWithCustomToken(token)
+		return signInWithCustomToken(token)
 	}
 
 	function logout() {
-		return auth.signOut()
+		signOut(auth)
+			.then(() => {
+				console.log('Signed Out')
+			})
+			.catch(err => {
+				console.log(err)
+			})
 	}
 
 	useEffect(() => {
-		const unsubscribe = auth.onAuthStateChanged(user => {
+		onAuthStateChanged(auth, (user) => {
 			setCurrentuser(user)
 			setLoading(false)
 			if(user) {
-				history.push('/Home')
+				navigate('/Home')
 			} else {
-				history.push('/Login')
+				navigate('/Login')
 			}
 		})
-
-		return unsubscribe
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 

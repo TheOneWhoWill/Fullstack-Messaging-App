@@ -20,17 +20,19 @@ router.post('/', upload.single('video'), verifyIDToken, isVideo, async (req, res
 	try {
 		// Reference to Video File
 		let videoRef = req.file;
-		// Upload to AWS
+		// Upload to Server
 		// Save in MongoDB
-		Videos.create({
-			uid: req.uid,
-			video: awsResponse.Location,
-			publishStatus: 'Unpublished',
-			Key: awsResponse.Key,
-			title: awsResponse.ETag.slice(1, -1),
+		//Videos.create({
+		//	uid: req.uid,
+		//	video: awsResponse.Location,
+		//	publishStatus: 'Unpublished',
+		//	Key: awsResponse.Key,
+		//	title: awsResponse.ETag.slice(1, -1),
+		//})
+		// See if req closed
+		req.on('close', () => {
+			fs.unlinkSync(`uploads/${req.uid}/${videoRef.filename}`)
 		})
-		// Delete files from local server after download
-		fs.unlinkSync(`uploads/${videoRef.filename}`)
 		// Response to client
 		res.status(200).send("File Upload Successful");
 	} catch (e) {

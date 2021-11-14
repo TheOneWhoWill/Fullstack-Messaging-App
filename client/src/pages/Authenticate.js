@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { useParams, Redirect } from 'react-router-dom';
+import { useParams, Route } from 'react-router-dom';
 import { Register, Login } from '../Components/AuthOptions';
 //rfce
 
@@ -49,7 +49,7 @@ function AuthPage() {
 				</div>
 				<p>By Logging in you agree to our Terms of Service and Privacy Policy</p>
 			</div>
-			{currentUser ? <Redirect to={to ? `/${to}` : '/'} /> : <></>}
+			{currentUser ? <Route to={to ? `/${to}` : '/'} /> : <></>}
 		</div>
 	);
 }

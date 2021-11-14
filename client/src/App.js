@@ -6,24 +6,29 @@ import Upload from './pages/Upload';
 import Auth from './pages/Authenticate';
 import Header from './Components/Header';
 import Sidebar from './Components/Sidebar';
-import { BrowserRouter, Route, Redirect } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
-	let HomeRedirect = () => <Redirect to="/"/>
+	let HomeRedirect = () => <Route to="/"/>
 
   return (
 		<div className="App">
-			<BrowserRouter>
-				<Header />
-				<Sidebar />
-				<div className="mainContent">
-					<Route exact path="/watch/:videoId" component={Watch} />
-					<Route exact path="/Home" component={HomeRedirect} />
-					<Route exact path="/Auth/to/:to" component={Auth} />
-					<Route exact path="/Upload" component={Upload} />
-					<Route exact path="/" component={Home} />
-				</div>
-			</BrowserRouter>
+			<Router>
+				<AuthProvider>
+					<Header />
+					<Sidebar />
+					<div className="mainContent">
+						<Routes>
+							<Route exact path="/watch/:videoId" component={Watch} />
+							<Route exact path="/Home" component={HomeRedirect} />
+							<Route exact path="/Auth/to/:to" component={Auth} />
+							<Route exact path="/Upload" component={Upload} />
+							<Route exact path="/" component={Home} />
+						</Routes>
+					</div>
+				</AuthProvider>
+			</Router>
     </div>
   );
 }

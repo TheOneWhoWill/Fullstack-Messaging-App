@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 2000;
 const server = http.createServer(app);
 
 app.use(express.json({type: ['application/json', 'text/plain']}));
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");

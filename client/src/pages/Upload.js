@@ -34,9 +34,8 @@ function Upload() {
 		currentUser && currentUser.getIdToken(true).then((idToken) => {
 			let data = new FormData();
 			data.append("video", video)
-			data.append("token", idToken)
 			axios({
-				url: `${process.env.REACT_APP_BASE_URL}/Upload`,
+				url: `${process.env.REACT_APP_BASE_URL}/Upload?token=${idToken}`,
 				method: 'POST',
 				data: data,
 				body: data

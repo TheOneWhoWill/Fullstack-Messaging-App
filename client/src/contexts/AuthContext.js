@@ -10,7 +10,7 @@ import {
 import '../firebase'
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import React, { useContext, useEffect, useState } from 'react'
-import { useNavigate  } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 const AuthContext = React.createContext()
 const auth = getAuth();
@@ -20,9 +20,8 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }) {
-	const navigate = useNavigate();
 	const [loading, setLoading] = useState(true)
-	const [currentUser, setCurrentuser] = useState()
+	const [currentUser, setCurrentuser] = useState(null)
 
 	function signup(email, password, displayName, profile) {
 		return createUserWithEmailAndPassword(email, password).then(function(result) {
@@ -34,8 +33,8 @@ export function AuthProvider({ children }) {
 	}
 
 	function GoogleSignIn() {
-		var provider = new GoogleAuthProvider();
-		return signInWithPopup(provider)
+		let provider = new GoogleAuthProvider();
+		return signInWithPopup(auth, provider)
 	}
 
 	function TwitterSignIn() {
@@ -52,7 +51,7 @@ export function AuthProvider({ children }) {
 	}
 
 	function login(email, password) {
-		return signInWithEmailAndPassword(email, password)
+		return signInWithEmailAndPassword(auth, email, password)
 	}
 
 	function loginWithToken(token) {
@@ -70,13 +69,13 @@ export function AuthProvider({ children }) {
 	}
 
 	useEffect(() => {
-		onAuthStateChanged(auth, (user) => {
+		onAuthStateChanged(auth, user => {
 			setCurrentuser(user)
 			setLoading(false)
 			if(user) {
-				navigate('/Home')
+				return <Navigate to="/Home" />
 			} else {
-				navigate('/Login')
+				<Navigate to="/Login" />
 			}
 		})
 	// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -88,6 +87,7 @@ export function AuthProvider({ children }) {
 		TwitterSignIn,
 		GoogleSignIn,
 		currentUser,
+		me: 'ssssss',
 		updateEmail,
 		signup,
 		login,

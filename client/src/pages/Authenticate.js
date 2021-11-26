@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { useParams, Route } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Register, Login } from '../Components/AuthOptions';
 //rfce
 
@@ -15,6 +15,7 @@ function OAuthBtn(props) {
 
 function AuthPage() {
 	let { to } = useParams();
+	const navigate = useNavigate();
 	const { currentUser } = useAuth();
 	function change() {setNew(!newUser)}
 	let [newUser, setNew] = useState(false);
@@ -49,7 +50,7 @@ function AuthPage() {
 				</div>
 				<p>By Logging in you agree to our Terms of Service and Privacy Policy</p>
 			</div>
-			{currentUser ? <Route to={to ? `/${to}` : '/'} /> : <></>}
+			{currentUser ? navigate(to ? `/${to}` : '/') : <></>}
 		</div>
 	);
 }

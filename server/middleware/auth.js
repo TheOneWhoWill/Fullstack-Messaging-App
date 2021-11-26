@@ -3,7 +3,7 @@ import admin from 'firebase-admin';
 
 function clearFiles(file) {
 	if(file) {
-		fs.unlinkSync(`uploads/${file.filename}`)
+		fs.unlinkSync(`./uploads/${file.filename}`)
 	}
 }
 
@@ -22,7 +22,7 @@ function verifyIDToken(req, res, next) {
 }
 
 function verifyIDTokenWithParams(req, res, next) {
-	let idToken = req.params.token
+	let idToken = req.params.token || req.query.token
 
 	admin.auth().verifyIdToken(idToken)
 		.then((decodedToken) => {

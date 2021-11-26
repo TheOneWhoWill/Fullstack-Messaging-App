@@ -26,24 +26,27 @@
 .Header {
 	top: 0;
 	z-index: 50;
-	width: 100%;
 	display: grid;
 	position: fixed;
+	max-width: 100%;
 	padding: 0 1.8rem;
 	grid-area: header;
 	align-items: center;
 	height: $headerHeight;
 	background: $headerTheme;
+	width: calc(100% - 80px);
 	justify-content: space-between;
 	grid-template-columns: auto 120px;
 	border-bottom: 2px solid $headerBorder;
+
+	.right {
+		display: grid;
+		align-items: center;
+		justify-content: space-between;
+		grid-template-columns: auto auto;
+	}
 }
 
-.Header .right {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-}
 // sideBar
 .sideBar {
 	left: 0;

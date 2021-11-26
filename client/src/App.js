@@ -7,29 +7,35 @@ import Auth from './pages/Authenticate';
 import Header from './Components/Header';
 import Sidebar from './Components/Sidebar';
 import { AuthProvider } from './contexts/AuthContext';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Route, Navigate, Outlet, BrowserRouter as Router, Routes } from 'react-router-dom';
 
 function App() {
-	let HomeRedirect = () => <Route to="/"/>
-
-  return (
-		<div className="App">
-			<Router>
+	function Wrapper() {
+		return (
+			<div className="mainContent">
 				<AuthProvider>
 					<Header />
 					<Sidebar />
-					<div className="mainContent">
-						<Routes>
-							<Route exact path="/watch/:videoId" component={Watch} />
-							<Route exact path="/Home" component={HomeRedirect} />
-							<Route exact path="/Auth/to/:to" component={Auth} />
-							<Route exact path="/Upload" component={Upload} />
-							<Route exact path="/" component={Home} />
-						</Routes>
-					</div>
+					<Outlet />
 				</AuthProvider>
-			</Router>
-    </div>
+			</div>
+		)
+	}
+
+  return (
+		<Router>
+			<div className="App">
+				<Routes>
+					<Route element={<Wrapper />}>
+						<Route path="/" exact element={<Home />} />
+						<Route path="/watch/:videoId" element={<Watch />} />
+						<Route path="/Home" element={<Navigate to="/" />} />
+						<Route path="/Auth/to/:to" element={<Auth />} />
+						<Route path="/Upload" element={<Upload />} />
+					</Route>
+				</Routes>
+    	</div>
+		</Router>
   );
 }
 

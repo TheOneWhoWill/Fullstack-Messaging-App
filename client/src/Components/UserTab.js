@@ -6,7 +6,7 @@ import { faCloudUploadAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 
 function SignedInBtn(props) {
-	if(props.img) {
+	if(props.currentUser) {
 		return (
 			<div className="right">
 				<Link to="Upload"><Icon icon={faCloudUploadAlt} className="HeaderIcon" /></Link>
@@ -42,6 +42,7 @@ function Header() {
 
 	return (
 		<SignedInBtn
+			currentUser={currentUser}
 			img={currentUser && currentUser.photoURL}
 			logout={logout}
 			uid={currentUser && currentUser.uid}

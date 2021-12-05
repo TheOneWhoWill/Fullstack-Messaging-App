@@ -6,12 +6,13 @@ function Watch() {
 	let { videoId } = useParams();
 	let [video, setVideo] = useState(null);
 	let [loading, setLoading] = useState(true)
+	let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
 	useEffect(() => {
 		axios.get(`${process.env.REACT_APP_BASE_URL}/Videos/${videoId}`)
 			.then(result => {
 				setLoading(false);
-				setVideo(result);
+				setVideo(result.data);
 			})
 			.catch(error => {
 				setLoading(false);
@@ -25,7 +26,9 @@ function Watch() {
 					<video className="video" controls src={`${process.env.REACT_APP_BASE_URL}/Videos/stream/${videoId}`}></video>
 					<div className="contents">
 						<h1>{video && video.title}</h1>
-						<div className="info"></div>
+						<div className="left">
+							Released {months[new Date(video.uploadDate).getMonth()]} {new Date(video.uploadDate).getDate()}, {new Date(video.uploadDate).getFullYear()}
+						</div>
 					</div>
 				</div>
 			</div>

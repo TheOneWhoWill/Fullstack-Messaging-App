@@ -27,7 +27,7 @@ function Watch() {
 					<div className="contents">
 						<h1>{video && video.title}</h1>
 						<div className="left">
-							Released {months[new Date(video.uploadDate).getMonth()]} {new Date(video.uploadDate).getDate()}, {new Date(video.uploadDate).getFullYear()}
+							Published {months[new Date(video.uploadDate).getMonth()]} {new Date(video.uploadDate).getDate()}, {new Date(video.uploadDate).getFullYear()}
 						</div>
 					</div>
 				</div>
@@ -40,4 +40,4 @@ function Watch() {
 	}
 }
 
-export default Watch
+export default Watch;

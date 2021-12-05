@@ -31,11 +31,25 @@
 	gap: 1rem;
 	display: grid;
 	grid-template-rows: auto auto;
+	.input {
+		width: 100%;
+		margin-bottom: 0;
+		input:focus + label {
+			background: #202020;
+		}
+	}
 }
 
 .uploadBtn {
 	border: none;
 	padding: 0.5rem 0;
 	border-radius: 1rem;
+	background: $globalblue;
+}
+
+.uploadTitle {
+	border: none;
+	border-radius: 0.4rem;
+	padding: 0.5rem 0.75rem;
 	background: $globalblue;
 }

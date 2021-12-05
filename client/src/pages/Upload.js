@@ -1,9 +1,10 @@
 import axios from 'axios';
 import Modal from 'react-modal';
+import Input from '../Components/Input'; 
 import Row from '../Components/VideoRow';
 import { useAuth } from '../contexts/AuthContext';
-import React, { useState, useEffect } from 'react';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 
 function Upload() {
@@ -13,6 +14,7 @@ function Upload() {
 	const [video, setVideo] = useState(null);
 	const openModal = () => setIsOpen(true);
 	const { currentUser } = useAuth();
+	const titleRef = useRef(null);
 	const customStyles = {
   	content: {
    		top: '50%',
@@ -34,6 +36,7 @@ function Upload() {
 		currentUser && currentUser.getIdToken(true).then((idToken) => {
 			let data = new FormData();
 			data.append("video", video)
+			data.append("title", titleRef.current.value)
 			axios({
 				url: `${process.env.REACT_APP_BASE_URL}/Upload?token=${idToken}`,
 				method: 'POST',
@@ -70,6 +73,7 @@ function Upload() {
 	return (
 		<div className="Upload">
 			<Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles} overlayClassName="modalOverlay">
+				<Input type="text" name="Title" inputRef={titleRef} />
 				<input type="file" onChange={fileChangeHandler} />
 				<button className="uploadBtn" onClick={fileUpload}>Upload Video</button>
 			</Modal>

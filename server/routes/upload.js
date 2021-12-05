@@ -11,7 +11,9 @@ const router = express.Router()
 const storage = multer.diskStorage({
 	destination: (req, file, cb) => {
 		let path = `./uploads/${req.uid}`;
-		fs.mkdirSync(path);
+		if (!fs.existsSync(path)){
+			fs.mkdirSync(path);
+		}
 		cb(null, path)
 	},
 	filename: (req, file, cb) => {
@@ -30,11 +32,10 @@ router.post('/', verifyIDTokenWithParams, upload.single('video'), isVideo, async
 			publishStatus: "Unpublished",
 			uploadDate: new Date().getTime(),
 			video: `uploads/${req.uid}/${videoRef.filename}`,
-			title: videoRef.filename
+			title: req.body.title ? req.body.title : videoRef.filename
 		})
 		// Response to client
 		res.status(200).send("File Upload Successful");
-		console.log('next')
 	} catch (e) {
 		// Reference to Video File
 		let videoRef = req.file;

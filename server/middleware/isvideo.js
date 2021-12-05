@@ -7,7 +7,7 @@ function isVideo(req, res, next) {
 	if(videoRef.mimetype === 'video/mp4' || videoRef.mimetype === 'video/mpeg') {
 		next()
 	} else {
-		fs.unlinkSync(`uploads/${videoRef.filename}`)
+		fs.unlinkSync(`uploads/${req.uid}/${videoRef.filename}`)
 		res.status(400).send("Please Upload a video");
 	}
 }

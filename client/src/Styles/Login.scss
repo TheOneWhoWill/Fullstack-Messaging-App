@@ -20,6 +20,9 @@
     font-size: 3rem;
     margin-bottom: 1rem;
   }
+	input:focus + label {
+		background: $darkblue;
+	}
   p {
     font-size: 11px;
     max-width: 17rem;

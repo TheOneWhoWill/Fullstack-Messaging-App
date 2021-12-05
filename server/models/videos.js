@@ -6,15 +6,19 @@ const videoSchema = mongoose.Schema({
 		required: true,
 		type: String
 	},
-	video: {
-		required: true,
-		type: Object
-	},
-	title: {
+	publishStatus: {
 		required: true,
 		type: String
 	},
-	publishStatus: {
+	uploadDate: {
+		required: true,
+		type: Number
+	},
+	video: {
+		required: true,
+		type: String
+	},
+	title: {
 		required: true,
 		type: String
 	}

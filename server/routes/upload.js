@@ -11,7 +11,7 @@ const router = express.Router()
 const storage = multer.diskStorage({
 	destination: (req, file, cb) => {
 		let path = `./uploads/${req.uid}`;
-    fs.mkdirSync(path);
+		fs.mkdirSync(path);
 		cb(null, path)
 	},
 	filename: (req, file, cb) => {
@@ -27,8 +27,9 @@ router.post('/', verifyIDTokenWithParams, upload.single('video'), isVideo, async
 		// Save in MongoDB
 		Videos.create({
 			uid: req.uid,
+			publishStatus: "Unpublished",
+			uploadDate: new Date().getTime(),
 			video: `uploads/${req.uid}/${videoRef.filename}`,
-			publishStatus: 'Unpublished',
 			title: videoRef.filename
 		})
 		// Response to client

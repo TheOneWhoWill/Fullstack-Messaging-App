@@ -1,11 +1,35 @@
-import React from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom'
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useAuth } from '../contexts/AuthContext';
+import React, { useEffect, useState } from 'react';
 import { faCloudUploadAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 
 function SignedInBtn(props) {
+	let [image, setImage] = useState(null);
+
+	async function createBlob() {
+		try {
+			const result = await fetch(props.currentUser.photoURL)
+			const blob = await result.blob();
+			let objURL = URL.createObjectURL(blob);
+			return objURL;
+		} catch (e) {
+			throw new Error(`Image Not Loaded`) 
+		}
+	}
+
+	useEffect(() => {
+		createBlob()
+			.then(res => {
+				console.log(res)
+			})
+			.catch(() => {
+				setImage(`https://lh3.googleusercontent.com/ogw/ADea4I6Pesr4iU69bQqnSZAdJstK_YBS6LHAT8fU7i1XoA=s333-c-mo`)
+			})
+	}, [])
+
 	if(props.currentUser) {
 		return (
 			<div className="right">
@@ -14,7 +38,7 @@ function SignedInBtn(props) {
 					<Dropdown.Toggle childBsPrefix="." variant="success" id="dropdown-basic">
 						<img
 							className="profileImage"
-							src={props.img}
+							src={image}
 							alt="ProfilePic"
 						/>
 					</Dropdown.Toggle>

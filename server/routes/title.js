@@ -1,5 +1,6 @@
 import axios from 'axios';
 import express from 'express';
+import Videos from '../models/videos.js';
 
 const router = express.Router()
 

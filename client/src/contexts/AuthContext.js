@@ -9,10 +9,10 @@ import {
 } from "firebase/auth";
 import '../firebase'
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState, createContext } from 'react'
 import { Navigate } from "react-router-dom";
 
-const AuthContext = React.createContext()
+const AuthContext = createContext()
 const auth = getAuth();
 
 export function useAuth() {

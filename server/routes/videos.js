@@ -1,10 +1,25 @@
 import fs from 'fs';
 import express from 'express';
 import Videos from '../models/videos.js';
-//import { verifyIDToken } from '../middleware/auth.js'
+import { verifyIDToken, verifyIDTokenWithParams } from '../middleware/auth.js';
 
 const router = express.Router()
 
+router.get('/preview/:videoId', verifyIDToken, async (req, res) => {
+	// Find the video Id in the database
+  try {
+		let videoId = req.params.videoId
+		let video = await Videos.findOne({_id: videoId});
+
+		if(video.uid === req.uid) {
+			res.send(video)
+		} else {
+			throw new Error("")
+		}
+	} catch (error) {
+		res.status(400).send("Cannot access video")
+	}
+})
 
 router.get('/:videoId', async (req, res) => {
 	// Find the video Id in the database
@@ -12,7 +27,11 @@ router.get('/:videoId', async (req, res) => {
 		let videoId = req.params.videoId
 		let video = await Videos.findOne({_id: videoId});
 
-		res.send(video)
+		if(video.publishStatus === "Published") {
+			res.send(video);
+		} else {
+			throw new Error("")
+		}
 	} catch (error) {
 		res.status(400).send("Cannot access video")
 	}
@@ -41,11 +60,15 @@ router.get('/stream/:uploadId', async (req, res) => {
 			"Content-Length": contentLength,
 			"Content-Type": "video/mp4",
 		};
-		// 206 is the Code for partial content
-		res.writeHead(206, headers);
-		// Creates a reas stream for a certain chunk and sends it to client
-		let videoStream = fs.createReadStream(path, { start, end });
-		videoStream.pipe(res);
+		if(video.publishStatus === "Published") {
+			// 206 is the Code for partial content
+			res.writeHead(206, headers);
+			// Creates a reas stream for a certain chunk and sends it to client
+			let videoStream = fs.createReadStream(path, { start, end });
+			videoStream.pipe(res);
+		} else {
+			throw new Error("")
+		}
 	} catch (err) {
 		res.status(400).send("Couldnt find video")
 	}

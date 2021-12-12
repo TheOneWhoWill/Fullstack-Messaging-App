@@ -8,23 +8,28 @@ function Preview() {
 	const { currentUser } = useAuth();
 	let [video, setVideo] = useState(null);
 	let [loading, setLoading] = useState(true)
+	let [currentToken, setToken] = useState(null);
 	let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
+	async function getPreview() {
+		try {
+			let idToken = currentUser && await currentUser.getIdToken(true)
+			let result = await axios.post(`${process.env.REACT_APP_BASE_URL}/Videos/preview/${videoId}`, {token: idToken})
+			
+			setToken(idToken);
+			setVideo(result.data);
+		} catch (e) {
+			throw new Error('Problem with get request')
+		}
+	}
+
 	useEffect(() => {
-		currentUser && currentUser.getIdToken(true)
-			.then((idToken) => {
-				axios.get(`${process.env.REACT_APP_BASE_URL}/Videos/preview/${videoId}`, {token: idToken})
-					.then(result => {
-						setLoading(false);
-						setVideo(result.data);
-					})
-					.catch(() => {
-						setLoading(false);
-					})
-			})
-			.catch((err) => {
-				console.log(err)
-			})
+		try {
+			getPreview()
+			setLoading(false);
+		} catch (e) {
+			alert(e)
+		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [videoId])
 
@@ -32,7 +37,7 @@ function Preview() {
 		return (
 			<div className="Watch">
 				<div className="videoContainer">
-					<video className="video" controls src={`${process.env.REACT_APP_BASE_URL}/Videos/stream/${videoId}/`}></video>
+					<video className="video" controls src={`${process.env.REACT_APP_BASE_URL}/Videos/preview/stream/${videoId}/?token=${currentToken && currentToken}`}></video>
 					<div className="contents">
 						<h1>{video && video.title}</h1>
 						<div className="left">

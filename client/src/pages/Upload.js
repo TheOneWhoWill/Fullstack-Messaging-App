@@ -2,7 +2,6 @@ import axios from 'axios';
 import Modal from 'react-modal';
 import Input from '../Components/Input'; 
 import Row from '../Components/VideoRow';
-import { useAuth } from '../contexts/AuthContext';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
@@ -11,9 +10,7 @@ function Upload() {
 	const [modalIsOpen, setIsOpen] = useState(false);
 	const [fileList, setFileList] = useState(null);
 	const closeModal = () => setIsOpen(false);
-	const [video, setVideo] = useState(null);
 	const openModal = () => setIsOpen(true);
-	const { currentUser } = useAuth();
 	const titleRef = useRef(null);
 	const customStyles = {
   	content: {
@@ -27,55 +24,24 @@ function Upload() {
   	},
 	};
 
-	function fileChangeHandler(e) {
-		setVideo(e.target.files[0])
-	}
-
-	function fileUpload() {
-		// Get id token to add to form data
-		currentUser && currentUser.getIdToken(true).then((idToken) => {
-			let data = new FormData();
-			data.append("video", video)
-			data.append("title", titleRef.current.value)
-			axios({
-				url: `${process.env.REACT_APP_BASE_URL}/Upload?token=${idToken}`,
-				method: 'POST',
-				data: data,
-				body: data
-			})
-			.then(res => {
-				closeModal()
-				alert(res.data)
-			})
-			.catch(err => {
-				alert(err)
-				console.log(err)
-			})
-		}).catch((error) => {
-			console.log(error)
-		});
-	}
-
 	useEffect(() => {
-		currentUser && currentUser.getIdToken(true).then((idToken) => {
-			axios.post(`${process.env.REACT_APP_BASE_URL}/Upload/get`, {token: idToken})
-				.then(response => {
-					setFileList(response.data)
-				})
-				.catch(error => {
-					console.log(error)
-				})
-		})
-		.catch(err => console.log(err))
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		setFileList([
+			{
+				uid: "bmN87QL0MIR299Mb6pwYazsE9no1",
+				video: "uploads/bmN87QL0MIR299Mb6pwYazsE9no1/videoplayback.mp4",
+				publishStatus: "Unpublished",
+				title: "This is a video on the row",
+				uploadDate: 1638580134406
+			}
+		])
 	}, [])
 
 	return (
 		<div className="Upload">
 			<Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles} overlayClassName="modalOverlay">
 				<Input type="text" name="Title" inputRef={titleRef} />
-				<input type="file" onChange={fileChangeHandler} />
-				<button className="uploadBtn" onClick={fileUpload}>Upload Video</button>
+				<input type="file" onChange={console.log('dd')} />
+				<button className="uploadBtn" onClick={console.log('dds')}>Upload Video</button>
 			</Modal>
 			<div className="topBar">
 				<h2>Profile content</h2>

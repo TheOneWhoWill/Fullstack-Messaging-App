@@ -1,12 +1,11 @@
 import fs from 'fs';
 import express from 'express';
 import Videos from '../models/videos.js';
-import { verifyIDToken, verifyIDTokenWithParams } from '../middleware/auth.js';
+import { verifyIDToken, verifyIDTokenWithParams, verifyHeaderIDToken } from '../middleware/auth.js';
 
 const router = express.Router()
 
 router.post('/preview/:videoId', verifyIDToken, async (req, res) => {
-	console.log('ss')
 	// Find the video Id in the database
   try {
 		let videoId = req.params.videoId
@@ -61,7 +60,7 @@ router.get('/stream/:uploadId', async (req, res) => {
 			"Content-Length": contentLength,
 			"Content-Type": "video/mp4",
 		};
-		if(video.publishStatus === "Published") {
+		if(upload.publishStatus === "Published") {
 			// 206 is the Code for partial content
 			res.writeHead(206, headers);
 			// Creates a reas stream for a certain chunk and sends it to client
@@ -75,7 +74,8 @@ router.get('/stream/:uploadId', async (req, res) => {
 	}
 })
 
-router.get('/preview/stream/:uploadId?:token', verifyIDTokenWithParams, async (req, res) => {
+router.get('/preview/stream/:uploadId', async (req, res) => {
+	console.log(req.headers.authorization)
 	try {
 		const mongoVideoIndex = req.params.uploadId;
 		// Looks for upload index based on upload id
@@ -98,17 +98,22 @@ router.get('/preview/stream/:uploadId?:token', verifyIDTokenWithParams, async (r
 			"Content-Length": contentLength,
 			"Content-Type": "video/mp4",
 		};
-		if(req.uid === upload.uid) {
-			// 206 is the Code for partial content
-			res.writeHead(206, headers);
-			// Creates a reas stream for a certain chunk and sends it to client
-			let videoStream = fs.createReadStream(path, { start, end });
-			videoStream.pipe(res);
-		} else {
-			throw new Error("")
-		}
+		// 206 is the Code for partial content
+		res.writeHead(206, headers);
+		// Creates a reas stream for a certain chunk and sends it to client
+		let videoStream = fs.createReadStream(path, { start, end });
+		videoStream.pipe(res);
+		//if(upload.uid) {
+		//	// 206 is the Code for partial content
+		//	res.writeHead(206, headers);
+		//	// Creates a reas stream for a certain chunk and sends it to client
+		//	let videoStream = fs.createReadStream(path, { start, end });
+		//	videoStream.pipe(res);
+		//} else {
+		//	throw new Error("")
+		//}
 	} catch (err) {
-		res.status(400).send("Couldnt find video")
+		res.status(400).send(err)
 	}
 })
 

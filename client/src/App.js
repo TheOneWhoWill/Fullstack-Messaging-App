@@ -3,7 +3,6 @@ import './Styles/index.scss';
 import Home from './pages/Home';
 import Watch from './pages/Watch';
 import Upload from './pages/Upload';
-import Preview from './pages/Preview';
 import Auth from './pages/Authenticate';
 import Header from './Components/Header';
 import Sidebar from './Components/Sidebar';
@@ -30,7 +29,6 @@ function App() {
 					<Route element={<Wrapper />}>
 						<Route path="/" exact element={<Home />} />
 						<Route path="/watch/:videoId" element={<Watch />} />
-						<Route path="/preview/:videoId" element={<Preview />} />
 						<Route path="/Home" element={<Navigate to="/" />} />
 						<Route path="/Auth/to/:to" element={<Auth />} />
 						<Route path="/Upload" element={<Upload />} />

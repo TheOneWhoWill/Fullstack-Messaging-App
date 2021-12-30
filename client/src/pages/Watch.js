@@ -1,43 +1,21 @@
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 function Watch() {
-	let { videoId } = useParams();
-	let [video, setVideo] = useState(null);
-	let [loading, setLoading] = useState(true)
 	let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
-	useEffect(() => {
-		axios.get(`${process.env.REACT_APP_BASE_URL}/Videos/${videoId}`)
-			.then(result => {
-				setLoading(false);
-				setVideo(result.data);
-			})
-			.catch(error => {
-				setLoading(false);
-			})
-	}, [videoId])
-
-	if(!loading && video) {
-		return (
-			<div className="Watch">
-				<div className="videoContainer">
-					<video className="video" controls src={`${process.env.REACT_APP_BASE_URL}/Videos/stream/${videoId}`}></video>
-					<div className="contents">
-						<h1>{video && video.title}</h1>
-						<div className="left">
-							Published {months[new Date(video.uploadDate).getMonth()]} {new Date(video.uploadDate).getDate()}, {new Date(video.uploadDate).getFullYear()}
-						</div>
+	return (
+		<div className="Watch">
+			<div className="videoContainer">
+				<video className="video" controls src="https://supabase.com/docs/videos/storage/policies.mp4"></video>
+				<div className="contents">
+					<h1>This is the video Title</h1>
+					<div className="left">
+						Published {months[new Date(1638580134406).getMonth()]} {new Date(1638580134406).getDate()}, {new Date(1638580134406).getFullYear()}
 					</div>
 				</div>
 			</div>
-		)
-	} else {
-		return (
-			<h1>404 Video Not Found</h1>
-		)
-	}
+		</div>
+	)
 }
 
 export default Watch;

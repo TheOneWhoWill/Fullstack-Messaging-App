@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { Link } from 'react-router-dom'
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useAuth } from '../contexts/AuthContext';

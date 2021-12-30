@@ -34,6 +34,10 @@ function verifyIDTokenWithParams(req, res, next) {
 		})
 }
 
+function verifyHeaderIDToken(req, res, next) {
+	next()
+}
+
 function verifySocket(idToken) {
 	admin.auth().verifyIdToken(idToken)
 		.then((decodedToken) => {
@@ -45,4 +49,4 @@ function verifySocket(idToken) {
 }
 
 
-export { verifyIDToken, verifyIDTokenWithParams, verifySocket };
+export { verifyIDToken, verifyIDTokenWithParams, verifySocket, verifyHeaderIDToken };

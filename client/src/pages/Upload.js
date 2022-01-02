@@ -6,13 +6,13 @@ import { useAuth } from '../contexts/AuthContext';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
-import { getStorage, ref, uploadBytesResumable, getDownloadURL, updateMetadata, deleteObject } from "firebase/storage";
-import { collection, addDoc, getFirestore } from "firebase/firestore";
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { addDoc, collection, getFirestore, serverTimestamp, query, where, getDocs, onSnapshot } from "firebase/firestore"
 
 function Upload() {
 	const [currentProgress, setProgress] = useState(null);
 	const [modalIsOpen, setIsOpen] = useState(false);
-	const [fileList, setFileList] = useState(null);
+	const [fileList, setFileList] = useState([]);
 	const closeModal = () => setIsOpen(false);
 	const [video, setVideo] = useState(null);
 	const openModal = () => setIsOpen(true);
@@ -36,71 +36,68 @@ function Upload() {
 		setVideo(e.target.files[0])
 	}
 
-	function generateRandomFileName() {
+	async function generateRandomFileName() {
 		let fileName = `/videos/${currentUser.uid}/${uuid()}.mp4`
 		let storageRef = ref(storage, fileName)
-		
-		getDownloadURL(storageRef)
-			.then(foundURL => {
-				generateRandomFileName();
-			})
-			.catch(err => {
-				return fileName;
-			})
-	}
 
-	function handleProgress(snapshot) {
-		const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-		// Shows current upload progress to user
-		setProgress('Upload is ' + progress + '% done');
-		// If the Upload is Paused it will show it
-		if (snapshot.state === 'paused') {
-			setProgress('Upload paused');
+		try {
+			await getDownloadURL(storageRef)
+
+			generateRandomFileName()
+		} catch (e) {
+			return fileName
 		}
 	}
 
-	function uploadVideo() {
+	async function uploadVideo() {
 		if(video && titleRef.current.value) {
-			let fileName = generateRandomFileName()
+			let fileName = await generateRandomFileName()
 			let storageRef = ref(storage, fileName);
 			let uploadTask = uploadBytesResumable(storageRef, video);
-
-			setProgress(null)
-	
+			
 			uploadTask.on('state_changed', (snapshot) => {
-					handleProgress(snapshot)
-					// If there is a error it just closes the modal
-				}, (error) => {
-					setProgress('There was a error')
-					// Gives half a second waiting period
-					setTimeout(() => {
-						// Closes Modal after waiting period
-						closeModal()
-					}, 500);
-				}, () => {
-					let newMetadata = {
-						customMetadata: {
-							uid: currentUser.uid
-						}
-					}
-					updateMetadata(storageRef, newMetadata).catch((err) => console.error(err))
+				setProgress(null)
+				const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+				// Shows current upload progress to user
+				setProgress(progress + '% done');
+				// If the Upload is Paused it will show it
+				if (snapshot.state === 'paused') {
+					setProgress('Paused');
 				}
-			)
+				// If there is a error it just closes the modal
+			}, (error) => {
+				setProgress('There was a error')
+				// Gives half a second waiting period
+				setTimeout(() => {
+					// Closes Modal after waiting period
+					closeModal()
+				}, 500);
+			}, () => {
+				let videoData = {
+					uid: currentUser.uid,
+					video: storageRef.fullPath,
+					publishStatus: "Unpublished",
+					title: titleRef.current.value,
+					uploadDate: serverTimestamp()
+				}
+				addDoc(collection(db, "videos"), videoData)
+					.catch(err => {
+						console.log(err)
+					})
+			})
 		} else {
 			console.log("Please fill out every part of the form")
 		}
 	}
 
 	useEffect(() => {
-		setFileList([
-			{
-				uid: "bmN87QL0MIR299Mb6pwYazsE9no1",
-				video: "uploads/bmN87QL0MIR299Mb6pwYazsE9no1/videoplayback.mp4",
-				publishStatus: "Unpublished",
-				title: "This is a video on the row",
-				uploadDate: 1638580134406
-			}
-		])
+		onSnapshot(collection(db, "videos"), where("uid", "===", currentUser.uid), (snapshot) => {
+			setFileList(
+				// doc.data() converts the query into regular json data
+				// I am also destructuring it to add a id field from the doc id
+				snapshot.docs.map(doc => ({...doc.data(), id: doc.id}))
+			)
+		});
 	}, [])
 
 	return (
@@ -117,6 +114,7 @@ function Upload() {
 			</div>
 			<div className="files">
 				{fileList && fileList.map(video => {
+					console.log(video)
 					return <Row key={uuid()} video={video}/>
 				})}
 			</div>

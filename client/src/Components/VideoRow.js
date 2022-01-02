@@ -12,7 +12,7 @@ function VideoRow(props) {
 				<p className="publishingStaus">Publishing Status: {video.publishStatus}</p>
 				<span className="rowBtn">Edit <Icon icon={faEdit} className="editIcon" /></span>
 				<span className="rowBtn">Publish</span>
-				<a className="previewLink" href={`preview/${video._id}`}>Preview</a>
+				<a className="previewLink" href={`preview/${video.id}`}>Preview</a>
 			</div>
 			<div className="thumbnail">
 				<img src="https://i.ytimg.com/vi/e-EAUxynFck/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDaHZj7l2cByEK8XY0TXH4T7Bxd-Q" alt="1"/>

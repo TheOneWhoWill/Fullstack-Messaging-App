@@ -7,7 +7,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { addDoc, collection, getFirestore, serverTimestamp, query, where, getDocs, onSnapshot } from "firebase/firestore"
+import { addDoc, collection, getFirestore, serverTimestamp, query, where, onSnapshot } from "firebase/firestore"
 
 function Upload() {
 	const [currentProgress, setProgress] = useState(null);
@@ -98,6 +98,7 @@ function Upload() {
 				snapshot.docs.map(doc => ({...doc.data(), id: doc.id}))
 			)
 		});
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	return (

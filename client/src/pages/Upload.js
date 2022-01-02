@@ -91,7 +91,7 @@ function Upload() {
 	}
 
 	useEffect(() => {
-		onSnapshot(collection(db, "videos"), where("uid", "===", currentUser.uid), (snapshot) => {
+		onSnapshot(query(collection(db, "videos"), where("uid", "==", currentUser.uid)), (snapshot) => {
 			setFileList(
 				// doc.data() converts the query into regular json data
 				// I am also destructuring it to add a id field from the doc id
@@ -114,7 +114,6 @@ function Upload() {
 			</div>
 			<div className="files">
 				{fileList && fileList.map(video => {
-					console.log(video)
 					return <Row key={uuid()} video={video}/>
 				})}
 			</div>

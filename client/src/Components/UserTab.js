@@ -27,6 +27,7 @@ function SignedInBtn(props) {
 			.catch(() => {
 				setImage(`https://lh3.googleusercontent.com/ogw/ADea4I6Pesr4iU69bQqnSZAdJstK_YBS6LHAT8fU7i1XoA=s333-c-mo`)
 			})
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	if(props.currentUser) {

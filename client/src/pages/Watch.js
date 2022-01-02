@@ -8,7 +8,6 @@ function Watch() {
 	let { videoId } = useParams();
 	const [videoData, setVideo] = useState(null);
 	const [loading, setLoading] = useState(true);
-	const [videoURL, setVideoURL] = useState(true);
 	let videoRef = doc(db, "videos", videoId);
 	let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
@@ -16,15 +15,15 @@ function Watch() {
 		async function getVidData() {
 			let vidSnap = await getDoc(videoRef);
 			if(vidSnap.exists()) {
-				setVideo(vidSnap.data());
 				// Process to get video URL
 				// Proper references to file
 				let storage = getStorage();
-				let pathReference = ref(storage, videoData.video);
+				let pathReference = ref(storage, vidSnap.data().video);
 				// Get URL
 				getDownloadURL(pathReference)
 					.then(url => {
-						setVideoURL(url)
+						setVideo({...vidSnap.data(), url: url});
+						setLoading(false)
 					})
 					.catch(err => {
 						console.error(err);
@@ -44,7 +43,7 @@ function Watch() {
 				<h3>Loading...</h3>
 			</div>
 		)
-	} else if(!loading && videoData === null) {
+	} else if(!loading && !videoData) {
 		return (
 			<div className="Watch">
 				<h3>Video Not Found, Sorry :(</h3>
@@ -60,7 +59,7 @@ function Watch() {
 		return (
 			<div className="Watch">
 				<div className="videoContainer">
-					{videoURL && <video className="video" controls src={videoURL}></video>}
+					{videoData.url && <video className="video" controls src={videoData.url}></video>}
 					<div className="contents">
 						<h1>{videoData.title}</h1>
 						<div className="left">

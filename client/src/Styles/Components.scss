@@ -296,7 +296,6 @@
 .videoRow {
 	display: grid;
 	padding: 1rem;
-	margin-top: 1rem;
 	border-radius: 0.5rem;
 	grid-template-columns: auto 18rem;
 	.title {
@@ -310,6 +309,7 @@
 		text-decoration: underline;
 	}
 	.rowBtn {
+		cursor: pointer;
 		padding: 0.6rem;
 		color: #181818;
 		margin-right: 1rem;

@@ -2,6 +2,8 @@ import { useParams } from 'react-router-dom'
 import React, { useEffect, useState } from 'react';
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
+import { faCaretUp, faCaretDown, faEllipsisH } from '@fortawesome/free-solid-svg-icons';
 
 function Watch() {
 	let db = getFirestore();
@@ -61,9 +63,16 @@ function Watch() {
 				<div className="videoContainer">
 					{videoData.url && <video className="video" controls src={videoData.url}></video>}
 					<div className="contents">
-						<h1>{videoData.title}</h1>
 						<div className="left">
+							<h1>{videoData.title}</h1>
 							Published {months[videoMonth]} {videoDate}, {videoYear}
+						</div>
+						<div className="right">
+							<Icon className="voteBtn" icon={faCaretUp} />
+							<p>{234}</p>
+							<Icon className="voteBtn" icon={faCaretDown} />
+							<p>{12}</p>
+							<Icon className="ellipsis" icon={faEllipsisH} />
 						</div>
 					</div>
 				</div>

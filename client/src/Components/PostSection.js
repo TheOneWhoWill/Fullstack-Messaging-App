@@ -10,13 +10,12 @@ function PostSection(props) {
 			{shows && shows.map(show => {
 				return (
 					<VideoCard
-						img={`https://image.tmdb.org/t/p/w500/${show.backdrop_path}`}
-						score={show.vote_average}
-						title={show.name}
-						lang={show.original_language}
+						img={'https://i.ytimg.com/vi/W41w05uSwzg/hq720.jpg' || `https://image.tmdb.org/t/p/w500/${show.backdrop_path}`}
+						score={10}
+						title={show.title}
 						audience="TV-14"
-						views={show.vote_count}
-						publishedDate={FriendlyTime(new Date(show.first_air_date))}
+						views={2222}
+						publishedDate={FriendlyTime(new Date(show.uploadDate.seconds * 1000))}
 					/>
 				)
 			})}

@@ -6,7 +6,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
-import { getStorage, ref, uploadBytesResumable, getDownloadURL, updateMetadata } from "firebase/storage";
+import { getStorage, ref, uploadBytes, getDownloadURL, updateMetadata } from "firebase/storage";
 import { addDoc, collection, getFirestore, serverTimestamp, query, where, onSnapshot } from "firebase/firestore"
 
 function Upload() {
@@ -50,10 +50,18 @@ function Upload() {
 	}
 
 	async function uploadVideo() {
+		// Custom Metadata
+		let newMetadata = {
+			customMetadata: {
+				uid: currentUser.uid,
+				publishStatus: "Unpublished"
+			}
+		}
+
 		if(video && titleRef.current.value) {
 			let fileName = await generateRandomFileName()
 			let storageRef = ref(storage, fileName);
-			let uploadTask = uploadBytesResumable(storageRef, video);
+			let uploadTask = uploadBytes(storageRef, video, newMetadata);
 			
 			uploadTask.on('state_changed', (snapshot) => {
 				setProgress(null)
@@ -81,18 +89,6 @@ function Upload() {
 					uploadDate: serverTimestamp()
 				}
 				addDoc(collection(db, "videos"), videoData)
-					.catch(err => {
-						console.log(err)
-					})
-				// Custom Metadata
-				let newMetadata = {
-					customMetadata: {
-						uid: currentUser.uid,
-						publishStatus: "Unpublished"
-					}
-				}
-				// Adds custom metadata needed for preview security rules
-				updateMetadata(storageRef, newMetadata)
 					.catch(err => {
 						console.log(err)
 					})
